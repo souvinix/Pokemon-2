@@ -3,6 +3,7 @@
 from tkinter import *
 from tkinter import ttk
 import time
+import random
 
 fenster = Tk()
 fenster.title('The Elder Scrolls 6: Pokemon')
@@ -15,20 +16,36 @@ Menubutton1 = Menu(MyMenu)
 MyMenu.add_cascade(label = 'Commands', menu = Menubutton1)
 Menubutton1.add_command(label = 'Quit', command = fenster.destroy)
 
+pfad = 'Alle_Bilder/'
 
-prof_eich = PhotoImage(file = 'prof eich.gif')
-sprechblase = PhotoImage(file = 'sprechblase.gif')
-Hooh = PhotoImage(file = 'hooh.gif')
-boy = PhotoImage(file = 'boy.gif')
-girl = PhotoImage(file = 'girl.gif')
-schwarz = PhotoImage(file = 'schwarz.gif')
-glumanda = PhotoImage(file = 'Glumanda.gif')
-bisasam = PhotoImage(file = 'Bisasam.gif')
-schiggy = PhotoImage(file = 'Schiggy.gif')
-bg_for_pokechoice = PhotoImage(file = 'bg_for_pokechoice.gif')
-schiggy_button = PhotoImage(file = 'Schiggy_Button.gif')
-glumanda_button = PhotoImage(file = 'Glumanda_Button.gif')
-bisasam_button = PhotoImage(file = 'Bisasam_Button.gif')
+prof_eich = PhotoImage(file = pfad+'prof eich.gif')
+sprechblase = PhotoImage(file = pfad+'sprechblase.gif')
+Hooh = PhotoImage(file = pfad+'hooh.gif')
+boy = PhotoImage(file = pfad+'boy.gif')
+girl = PhotoImage(file = pfad+'girl.gif')
+schwarz = PhotoImage(file = pfad+'schwarz.gif')
+glumanda = PhotoImage(file = pfad+'Glumanda.gif')
+bisasam = PhotoImage(file = pfad+'Bisasam.gif')
+schiggy = PhotoImage(file = pfad+'Schiggy.gif')
+bg_for_pokechoice = PhotoImage(file = pfad+'bg_for_pokechoice.gif')
+schiggy_button = PhotoImage(file = pfad+'Schiggy_Button.gif')
+glumanda_button = PhotoImage(file = pfad+'Glumanda_Button.gif')
+bisasam_button = PhotoImage(file = pfad+'Bisasam_Button.gif')
+
+Nach_Links_stehen = PhotoImage(file = pfad+'Von_links_stehen.gif')
+Nach_Links_schritt1 = PhotoImage(file = pfad+'Von_links_schritt1.gif')
+Nach_Links_schritt2 = PhotoImage(file = pfad+'Von_links_schritt2.gif')
+Nach_Rechts_stehen = PhotoImage(file = pfad+'Von_rechts_stehen.gif')
+Nach_Rechts_schritt1 = PhotoImage(file = pfad+'Von_rechts_schritt1.gif')
+Nach_Rechts_schritt2 = PhotoImage(file = pfad+'Von_rechts_schritt2.gif')
+Nach_Unten_stehen = PhotoImage(file = pfad+'Von_vorne_stehen.gif')
+Nach_Unten_schritt1 = PhotoImage(file = pfad+'Von_vorne_schritt1.gif')
+Nach_Unten_schritt2 = PhotoImage(file = pfad+'Von_vorne_schritt2.gif')
+Nach_Oben_stehen = PhotoImage(file = pfad+'Von_hinten_stehen.gif')
+Nach_Oben_schritt1 = PhotoImage(file = pfad+'Von_hinten_schritt1.gif')
+Nach_Oben_schritt2 = PhotoImage(file = pfad+'Von_hinten_schritt2.gif')
+
+testmap = PhotoImage(file = pfad+'Anfangsraum.gif')
 
 ############################
 
@@ -41,6 +58,216 @@ Mein_Max_Leben = 100
 Mein_Aktuelles_Leben = 100
 
 ############################
+
+def Ingame_Escape(event):
+    Ingame()
+
+def Ingame():
+    global timerRIGHT, timerLEFT, timerDOWN, timerUP
+    global Map_x, Map_y, Geschwindigkeit
+    
+    Hauptmenü_Destroy()
+    test_ingame.destroy()
+    
+    ingame_fenster = fenster
+    ingame_fenster.title('Pokemon 2 - InGame')
+    ingame_fenster.geometry('800x600')
+    ingame_fenster.resizable(0,0)
+
+    Map_x = 369
+    Map_y = 250
+    Geschwindigkeit = 4
+    
+    def Maus_Pos(event):
+        x, y = event.x, event.y
+        print('x = {}, y = {}'.format(x, y))
+        ingame_fenster.bind('<Motion>', Maus_Pos)        
+    fenster.bind('<Key-x>', Maus_Pos)
+
+    def Sprint(event):
+        global Geschwindigkeit, Sprint_Geschwindigkeit
+        Geschwindigkeit = 7
+    def Sprint_Beenden(event):
+        global Geschwindigkeit, Sprint_Geschwindigkeit
+        Geschwindigkeit = 4
+
+    Schrittgeschwindigkeit1 = 0 #Muss 0 bleiben
+    Schrittgeschwindigkeit2 = 7
+    Schrittgeschwindigkeit3 = 14
+    Schrittgeschwindigkeit4 = 21
+    timerUP = 0
+    timerDOWN = 0
+    timerLEFT = 0
+    timerRIGHT = 0
+
+
+    
+    def Alle_Objekte():
+        global Map_x, Map_y
+
+        #Bett
+        if (Map_x < 297 and Map_y < 280 and Map_x < Map_y):
+            Map_y += Geschwindigkeit
+        elif (Map_x < 297 and Map_y < 280 and Map_x > Map_y):
+            Map_x += Geschwindigkeit
+
+        #Treppe
+        if (Map_x > 494 and Map_y < 285 and Map_x < 500):
+            Map_x -= Geschwindigkeit
+        elif (Map_x > 494 and Map_y < 285 and Map_x > 500):
+            Map_y += Geschwindigkeit
+
+        #Pflanze
+        if (Map_x > 520 and Map_y > 400 and Map_x > 525):
+            Map_x -= Geschwindigkeit
+        elif (Map_x > 520 and Map_y > 380 and Map_x > 525):
+            Map_y -= Geschwindigkeit
+
+        #Glastisch
+            #Vorbeigehen können
+        loll = (290, 410)
+        if (Map_x > 365 and Map_y > 410):
+            if(Map_x > 365 and Map_y > 405 and Map_x < 480 and Map_y == loll):
+                print('Hier')
+                #Map_y += Geschwindigkeit
+        elif (Map_x > 480 and Map_y > 290):
+            pass
+            #Obere und linke Seite
+        elif(Map_x > 365 and Map_y > 290 and Map_x < 370):
+            Map_x -= Geschwindigkeit
+        elif(Map_x > 365 and Map_y > 290 and Map_x > 370):
+            Map_y -= Geschwindigkeit
+         
+            
+            
+
+        #Rand
+            #OBEN
+        if(Map_y < 215):
+            Map_y = 215
+            #UNTEN
+        if(Map_y > 444): 
+            Map_y = 444
+            #LINKS
+        if (Map_x < 206): 
+            Map_x = 206
+            #RECHTS
+        if(Map_x > 560):
+            Map_x = 560
+    
+    def Key_Up(event):
+        global Map_x, Map_y, timerUP
+        timerUP += 1
+
+        if (timerUP >= Schrittgeschwindigkeit1):
+            Ash.configure(image = Nach_Oben_schritt1)
+        if (timerUP >= Schrittgeschwindigkeit2):
+            Ash.configure(image = Nach_Oben_stehen)
+        if (timerUP >= Schrittgeschwindigkeit3):
+            Ash.configure(image = Nach_Oben_schritt2)
+        if (timerUP >= Schrittgeschwindigkeit4):
+            timerUP = 0
+        if(timerUP == 0):
+            Ash.configure(image = Nach_Oben_stehen)
+
+        Alle_Objekte()
+        
+        Map_y -= Geschwindigkeit
+        Ash.place(x = Map_x, y = Map_y)
+        
+    def Key_Down(event):
+        global Map_x, Map_y, timerDOWN
+
+        timerDOWN += 1
+
+        if (timerDOWN >= Schrittgeschwindigkeit1):
+            Ash.configure(image = Nach_Unten_schritt1)
+        if (timerDOWN >= Schrittgeschwindigkeit2):
+            Ash.configure(image = Nach_Unten_stehen)
+        if (timerDOWN >= Schrittgeschwindigkeit3):
+            Ash.configure(image = Nach_Unten_schritt2)
+        if (timerDOWN >= Schrittgeschwindigkeit4):
+            timerDOWN = 0
+        if(timerDOWN == 0):
+            Ash.configure(image = Nach_Unten_stehen)
+
+        Alle_Objekte()
+
+        Map_y += Geschwindigkeit
+        Ash.place(x = Map_x, y = Map_y)
+      
+    def Key_Left(event):
+        global Map_x, Map_y, timerLEFT
+
+        timerLEFT += 1
+
+        if (timerLEFT >= Schrittgeschwindigkeit1):
+            Ash.configure(image = Nach_Links_schritt1)
+        if (timerLEFT >= Schrittgeschwindigkeit2):
+            Ash.configure(image = Nach_Links_stehen)
+        if (timerLEFT >= Schrittgeschwindigkeit3):
+            Ash.configure(image = Nach_Links_schritt2)
+        if (timerLEFT >= Schrittgeschwindigkeit4):
+            timerLEFT = 0
+        if(timerLEFT == 0):
+            Ash.configure(image = Nach_Links_stehen)
+
+        Alle_Objekte()
+
+        Map_x -= Geschwindigkeit
+        Ash.place(x = Map_x, y = Map_y)
+       
+    def Key_Right(event):
+        global Map_x, Map_y, timerRIGHT
+
+        timerRIGHT += 1
+
+        if (timerRIGHT >= Schrittgeschwindigkeit1):
+            Ash.configure(image = Nach_Rechts_schritt1)
+        if (timerRIGHT >= Schrittgeschwindigkeit2):
+            Ash.configure(image = Nach_Rechts_stehen)
+        if (timerRIGHT >= Schrittgeschwindigkeit3):
+            Ash.configure(image = Nach_Rechts_schritt2)
+        if (timerRIGHT >= Schrittgeschwindigkeit4):
+            timerRIGHT = 0
+        if(timerRIGHT == 0):
+            Ash.configure(image = Nach_Rechts_stehen)
+
+        Alle_Objekte()
+
+        Map_x += Geschwindigkeit
+        Ash.place(x = Map_x, y = Map_y)
+
+    Testmap = Label(ingame_fenster, image =testmap) 
+    Testmap.place(x = 0, y = 0)
+    
+    ingame_fenster.bind('<Key-Up>', Key_Up)
+    ingame_fenster.bind('<Key-Down>', Key_Down)
+    ingame_fenster.bind('<Key-Left>', Key_Left)
+    ingame_fenster.bind('<Key-Right>', Key_Right)
+
+    #Sprinten
+    ingame_fenster.bind('<Key-G>', Sprint)
+    ingame_fenster.bind('<Key-g>', Sprint)
+
+    #Entsprinten
+    ingame_fenster.bind('<Key-F>', Sprint_Beenden)
+    ingame_fenster.bind('<Key-f>', Sprint_Beenden)
+
+    Ash = Label(ingame_fenster, image = Nach_Unten_stehen, bd = 0)
+    Ash.place(x = Map_x, y = Map_y)
+
+    sprintlabel = Label(ingame_fenster, text = 'Sprinten (G), Entsprinten (F)', font = ('Terminator Two', 10))
+    sprintlabel.configure(bg = 'light blue', fg = 'dark blue')
+    sprintlabel.place(x = 550, y = 570)
+
+    def Pos(event):
+        print('-'*20)
+        print('Map_x = {}, Map_y = {}'.format(Map_x, Map_y))
+        print('-'*20)
+
+    ingame_fenster.bind('<Key-o>', Pos)
+    ingame_fenster.bind('<Key-O>', Pos) 
 
 def weiter1():
     nextbutton.configure(command = weiter2)
@@ -434,7 +661,7 @@ def backbutton_leave(event):
     backbutton.configure(bg = 'light grey')
 
 def Hauptmenü():
-    global logo, startbutton, shopbutton, quitbutton
+    global logo, startbutton, shopbutton, quitbutton, test_ingame
     
     logo = Label(fenster, text = 'Pokémon', fg = 'red', bg = 'light grey', font = ('Terminator Two', 80))
     logo.place(x = 110, y = 50)
@@ -460,8 +687,11 @@ def Hauptmenü():
     quitbutton.bind('<Enter>', quitbutton_enter)
     quitbutton.bind('<Leave>', quitbutton_leave)
 
+    test_ingame = Button(fenster, text = 'Test\nIngame', font = ('Terminator Two', 20), fg = 'black')
+    test_ingame.configure(command = Ingame)
+    test_ingame.place(x = 600, y = 350)
+    fenster.bind('<Key-l>', Ingame_Escape)
     
 
 Hauptmenü()
 fenster.mainloop()
-    
