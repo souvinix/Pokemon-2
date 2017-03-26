@@ -125,19 +125,34 @@ def Ingame():
 
         #Glastisch
             #Vorbeigehen können
-        loll = (290, 410)
-        if (Map_x > 365 and Map_y > 410):
-            if(Map_x > 365 and Map_y > 405 and Map_x < 480 and Map_y == loll):
-                print('Hier')
-                #Map_y += Geschwindigkeit
+        if (Map_x > 365 and Map_y > 405):
+            if(Map_x > 365 and Map_y > 400 and Map_x < 480 and Map_y <= 407):
+                Map_y += Geschwindigkeit
+        
         elif (Map_x > 480 and Map_y > 290):
-            pass
+            if(Map_x > 475 and Map_y > 290 and Map_y < 480 and Map_x <= 482):
+                Map_x += Geschwindigkeit
             #Obere und linke Seite
-        elif(Map_x > 365 and Map_y > 290 and Map_x < 370):
+        elif(Map_x > 365 and Map_y > 290 and Map_x < 370 and not Map_x > 460):
             Map_x -= Geschwindigkeit
-        elif(Map_x > 365 and Map_y > 290 and Map_x > 370):
+        elif(Map_x > 365 and Map_y > 290 and Map_x > 370 and not Map_y > 400):
             Map_y -= Geschwindigkeit
-         
+
+        #Couch
+            #Vorbeigehen können
+        if (Map_x > 300 and Map_y > 410):
+            if(Map_x > 300 and Map_y > 410 and Map_x < 365 and Map_y <= 415):
+                Map_y += Geschwindigkeit
+                
+        elif (Map_x > 360 and Map_y > 300):
+            if(Map_x > 360 and Map_y > 300 and Map_x < 365 and Map_y <= 415):
+                Map_x += Geschwindigkeit
+
+            #Obere und linke Seite
+        elif(Map_x > 285 and Map_y > 300 and Map_x < 360 and not Map_x > 365 and Map_y < 410):
+            Map_x -= Geschwindigkeit
+        elif(Map_x > 285 and Map_y > 295 and Map_x < 360 and not Map_y > 315):
+            Map_y -= Geschwindigkeit     
             
             
 
