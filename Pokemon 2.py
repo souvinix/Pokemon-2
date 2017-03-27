@@ -31,6 +31,7 @@ bg_for_pokechoice = PhotoImage(file = pfad+'bg_for_pokechoice.gif')
 schiggy_button = PhotoImage(file = pfad+'Schiggy_Button.gif')
 glumanda_button = PhotoImage(file = pfad+'Glumanda_Button.gif')
 bisasam_button = PhotoImage(file = pfad+'Bisasam_Button.gif')
+aktionsblase = PhotoImage(file = pfad+'Aktionsblase.gif')
 
 Nach_Links_stehen = PhotoImage(file = pfad+'Von_links_stehen.gif')
 Nach_Links_schritt1 = PhotoImage(file = pfad+'Von_links_schritt1.gif')
@@ -71,7 +72,6 @@ Neuborkia = False
 ########Meine Objekte#######
 ############################
 
-#Ash_Haus_1
 Buch = False
 Pikachu = False
 Uhr = False
@@ -82,9 +82,9 @@ def Ingame_Escape(event):
 
 def Ingame():
     global timerRIGHT, timerLEFT, timerDOWN, timerUP
-    global Map_x, Map_y, Geschwindigkeit, Testmap, Ash_Haus_1
-    global ingame_fenster, Alle_Objekte, Ash
-
+    global Map_x, Map_y, Geschwindigkeit, Testmap, Ash_Haus_1, Map_Hit
+    global ingame_fenster, Alle_Objekte, Ash, Pikachu, Buch, Uhr, Pumelluff, Aktionsblase
+    
     Ash_Haus_1 = True
     try:
         Hauptmenü_Destroy()
@@ -112,11 +112,10 @@ def Ingame():
     timerLEFT = 0
     timerRIGHT = 0
 
+    AshDirection = 'Down'
 
     def Alle_Objekte():
-        global Map_x, Map_y
-
-        AshDirection = 'Down'
+        global Map_x, Map_y, AshDirection, Pikachu, Buch, Uhr, Pumelluff, Aktionsblase, Map_Hit
 
         if Ash_Haus_1 == True:
             #Bett
@@ -124,8 +123,19 @@ def Ingame():
                 Map_y += Geschwindigkeit
             elif (Map_x < 297 and Map_y < 280 and Map_x > Map_y):
                 Map_x += Geschwindigkeit
-            if(Map_x < 297 and Map_y < 280 and Map_x < Map_y and AshDirection == 'Left'):
-                Pickachu = True
+                
+            #Bett Pikachu(Objekt)
+            if (Map_x < 305 and Map_y < 280):
+                if(AshDirection == 'Left'):
+                    Pikachu = True
+                if(Pikachu == True and AshDirection != 'Left'):
+                    Pikachu = False
+                    Map_Hit = False
+                    try:
+                        Aktionsblase.destroy()
+                    except:
+                        pass
+                    
             #Treppe
             if (Map_x > 494 and Map_y < 285 and Map_x < 500):
                 Map_x -= Geschwindigkeit
@@ -189,7 +199,7 @@ def Ingame():
                 Map_x = 560
     
     def Key_Up(event):
-        global Map_x, Map_y, timerUP
+        global Map_x, Map_y, timerUP, AshDirection
         timerUP += 1
 
         AshDirection = 'Up'
@@ -212,7 +222,7 @@ def Ingame():
         Ash.place(x = Map_x, y = Map_y)
         
     def Key_Down(event):
-        global Map_x, Map_y, timerDOWN
+        global Map_x, Map_y, timerDOWN, AshDirection
 
         AshDirection = 'Down'
 
@@ -235,7 +245,7 @@ def Ingame():
         Ash.place(x = Map_x, y = Map_y)
       
     def Key_Left(event):
-        global Map_x, Map_y, timerLEFT
+        global Map_x, Map_y, timerLEFT, AshDirection
 
         AshDirection = 'Left'
 
@@ -258,7 +268,7 @@ def Ingame():
         Ash.place(x = Map_x, y = Map_y)
 
     def Key_Right(event):
-        global Map_x, Map_y, timerRIGHT
+        global Map_x, Map_y, timerRIGHT, AshDirection
 
         AshDirection = 'Right'
 
@@ -310,13 +320,22 @@ def Ingame():
         def Alle_Objekte():
             pass
         Testmap.destroy()
-
+        
+    Map_Hit = False
     def Aktion(event):
-        try:
-            if(Pickachu == True):
-                print('Dies ist ein Pickachu!!!!!')
-        except:
-            pass
+        global AshDirection, Pikachu, Aktionsblase, Map_x, Map_y, Map_Hit
+        if(Pikachu == True):
+            if Map_Hit == False:
+                Aktionsblase = Label(fenster, image = aktionsblase,
+                             compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                Aktionsblase.place(x = 175, y = 475)
+                Aktionsblase.configure(text = 'Dies ist ein Pikachu!\naber kein echtes...')
+                Map_Hit = True
+            elif Map_Hit == True:
+                pass
+            
+
+        
 
     fenster.bind('<Key-k>', Aktion)
     fenster.bind('<Key-K>', Aktion)
