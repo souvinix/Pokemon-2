@@ -1,0 +1,14 @@
+def Sprint(event):
+        global Geschwindigkeit, Sprint_Geschwindigkeit
+        Geschwindigkeit = 7
+    def Sprint_Beenden(event):
+        global Geschwindigkeit, Sprint_Geschwindigkeit
+        Geschwindigkeit = 4
+
+#Sprinten
+    ingame_fenster.bind('<Key-G>', Sprint)
+    ingame_fenster.bind('<Key-g>', Sprint)
+
+    #Entsprinten
+    ingame_fenster.bind('<Key-F>', Sprint_Beenden)
+    ingame_fenster.bind('<Key-f>', Sprint_Beenden)
