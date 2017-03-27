@@ -56,40 +56,52 @@ Geld = 0
 Pokebälle = 0
 Mein_Max_Leben = 100
 Mein_Aktuelles_Leben = 100
+sprinten = False
 
 ############################
+#########Meine Räume########
+############################
+
+Ash_Haus_1 = False
+Ash_Haus_2 = False
+Ash_Haus_3 = False
+Neuborkia = False
+
+############################
+########Meine Objekte#######
+############################
+
+#Ash_Haus_1
+Buch = False
+Pikachu = False
+Uhr = False
+Pumelluff = False
 
 def Ingame_Escape(event):
     Ingame()
 
 def Ingame():
     global timerRIGHT, timerLEFT, timerDOWN, timerUP
-    global Map_x, Map_y, Geschwindigkeit
-    
-    Hauptmenü_Destroy()
-    test_ingame.destroy()
+    global Map_x, Map_y, Geschwindigkeit, Testmap, Ash_Haus_1
+    global ingame_fenster, Alle_Objekte, Ash
+
+    Ash_Haus_1 = True
+    try:
+        Hauptmenü_Destroy()
+        test_ingame.destroy()
+    except:
+        pass
     
     ingame_fenster = fenster
     ingame_fenster.title('Pokemon 2 - InGame')
     ingame_fenster.geometry('800x600')
     ingame_fenster.resizable(0,0)
 
+################################
     Map_x = 369
     Map_y = 250
     Geschwindigkeit = 4
-    
-    def Maus_Pos(event):
-        x, y = event.x, event.y
-        print('x = {}, y = {}'.format(x, y))
-        ingame_fenster.bind('<Motion>', Maus_Pos)        
-    fenster.bind('<Key-x>', Maus_Pos)
-
-    def Sprint(event):
-        global Geschwindigkeit, Sprint_Geschwindigkeit
-        Geschwindigkeit = 7
-    def Sprint_Beenden(event):
-        global Geschwindigkeit, Sprint_Geschwindigkeit
-        Geschwindigkeit = 4
+################################
 
     Schrittgeschwindigkeit1 = 0 #Muss 0 bleiben
     Schrittgeschwindigkeit2 = 7
@@ -101,78 +113,87 @@ def Ingame():
     timerRIGHT = 0
 
 
-    
     def Alle_Objekte():
         global Map_x, Map_y
 
-        #Bett
-        if (Map_x < 297 and Map_y < 280 and Map_x < Map_y):
-            Map_y += Geschwindigkeit
-        elif (Map_x < 297 and Map_y < 280 and Map_x > Map_y):
-            Map_x += Geschwindigkeit
+        AshDirection = 'Down'
 
-        #Treppe
-        if (Map_x > 494 and Map_y < 285 and Map_x < 500):
-            Map_x -= Geschwindigkeit
-        elif (Map_x > 494 and Map_y < 285 and Map_x > 500):
-            Map_y += Geschwindigkeit
-
-        #Pflanze
-        if (Map_x > 520 and Map_y > 400 and Map_x > 525):
-            Map_x -= Geschwindigkeit
-        elif (Map_x > 520 and Map_y > 380 and Map_x > 525):
-            Map_y -= Geschwindigkeit
-
-        #Glastisch
-            #Vorbeigehen können
-        if (Map_x > 365 and Map_y > 405):
-            if(Map_x > 365 and Map_y > 400 and Map_x < 480 and Map_y <= 407):
+        if Ash_Haus_1 == True:
+            #Bett
+            if (Map_x < 297 and Map_y < 280 and Map_x < Map_y):
                 Map_y += Geschwindigkeit
-        
-        elif (Map_x > 480 and Map_y > 290):
-            if(Map_x > 475 and Map_y > 290 and Map_y < 480 and Map_x <= 482):
+            elif (Map_x < 297 and Map_y < 280 and Map_x > Map_y):
                 Map_x += Geschwindigkeit
-            #Obere und linke Seite
-        elif(Map_x > 365 and Map_y > 290 and Map_x < 370 and not Map_x > 460):
-            Map_x -= Geschwindigkeit
-        elif(Map_x > 365 and Map_y > 290 and Map_x > 370 and not Map_y > 400):
-            Map_y -= Geschwindigkeit
-
-        #Couch
-            #Vorbeigehen können
-        if (Map_x > 300 and Map_y > 410):
-            if(Map_x > 300 and Map_y > 410 and Map_x < 365 and Map_y <= 415):
+            if(Map_x < 297 and Map_y < 280 and Map_x < Map_y and AshDirection == 'Left'):
+                Pickachu = True
+            #Treppe
+            if (Map_x > 494 and Map_y < 285 and Map_x < 500):
+                Map_x -= Geschwindigkeit
+            elif (Map_x > 494 and Map_y < 285 and Map_x > 500):
                 Map_y += Geschwindigkeit
+            #Treppe(Funktion)
+            elif(Map_x > 490 and Map_y < 230):
+                Ingame_2()
+
+            #Pflanze
+            if (Map_x > 520 and Map_y > 400 and Map_x > 525):
+                Map_x -= Geschwindigkeit
+            elif (Map_x > 520 and Map_y > 380 and Map_x > 525):
+                Map_y -= Geschwindigkeit
+
+            #Glastisch
+                #Vorbeigehen können
+            if (Map_x > 365 and Map_y > 405):
+                if(Map_x > 365 and Map_y > 400 and Map_x < 480 and Map_y <= 407):
+                    Map_y += Geschwindigkeit
+            
+            elif (Map_x > 480 and Map_y > 290):
+                if(Map_x > 475 and Map_y > 290 and Map_y < 480 and Map_x <= 482):
+                    Map_x += Geschwindigkeit
+                #Obere und linke Seite
+            elif(Map_x > 365 and Map_y > 290 and Map_x < 370 and not Map_x > 460):
+                Map_x -= Geschwindigkeit
+            elif(Map_x > 365 and Map_y > 290 and Map_x > 370 and not Map_y > 400):
+                Map_y -= Geschwindigkeit
+
+            #Couch
+                #Vorbeigehen können
+            if (Map_x > 300 and Map_y > 410):
+                if(Map_x > 300 and Map_y > 410 and Map_x < 365 and Map_y <= 415):
+                    Map_y += Geschwindigkeit
+                    
+            elif (Map_x > 360 and Map_y > 300):
+                if(Map_x > 360 and Map_y > 300 and Map_x < 365 and Map_y <= 415):
+                    Map_x += Geschwindigkeit
+
+                #Obere und linke Seite
+            elif(Map_x > 285 and Map_y > 300 and Map_x < 360 and not Map_x > 365 and Map_y < 410):
+                Map_x -= Geschwindigkeit
+            elif(Map_x > 285 and Map_y > 295 and Map_x < 360 and not Map_y > 315):
+                Map_y -= Geschwindigkeit     
                 
-        elif (Map_x > 360 and Map_y > 300):
-            if(Map_x > 360 and Map_y > 300 and Map_x < 365 and Map_y <= 415):
-                Map_x += Geschwindigkeit
+                
 
-            #Obere und linke Seite
-        elif(Map_x > 285 and Map_y > 300 and Map_x < 360 and not Map_x > 365 and Map_y < 410):
-            Map_x -= Geschwindigkeit
-        elif(Map_x > 285 and Map_y > 295 and Map_x < 360 and not Map_y > 315):
-            Map_y -= Geschwindigkeit     
-            
-            
-
-        #Rand
-            #OBEN
-        if(Map_y < 215):
-            Map_y = 215
-            #UNTEN
-        if(Map_y > 444): 
-            Map_y = 444
-            #LINKS
-        if (Map_x < 206): 
-            Map_x = 206
-            #RECHTS
-        if(Map_x > 560):
-            Map_x = 560
+            #Rand
+                #OBEN
+            if(Map_y < 215):
+                Map_y = 215
+                #UNTEN
+            if(Map_y > 444): 
+                Map_y = 444
+                #LINKS
+            if (Map_x < 206): 
+                Map_x = 206
+                #RECHTS
+            if(Map_x > 560):
+                Map_x = 560
     
     def Key_Up(event):
         global Map_x, Map_y, timerUP
         timerUP += 1
+
+        AshDirection = 'Up'
+        
 
         if (timerUP >= Schrittgeschwindigkeit1):
             Ash.configure(image = Nach_Oben_schritt1)
@@ -192,6 +213,8 @@ def Ingame():
         
     def Key_Down(event):
         global Map_x, Map_y, timerDOWN
+
+        AshDirection = 'Down'
 
         timerDOWN += 1
 
@@ -214,6 +237,8 @@ def Ingame():
     def Key_Left(event):
         global Map_x, Map_y, timerLEFT
 
+        AshDirection = 'Left'
+
         timerLEFT += 1
 
         if (timerLEFT >= Schrittgeschwindigkeit1):
@@ -231,9 +256,11 @@ def Ingame():
 
         Map_x -= Geschwindigkeit
         Ash.place(x = Map_x, y = Map_y)
-       
+
     def Key_Right(event):
         global Map_x, Map_y, timerRIGHT
+
+        AshDirection = 'Right'
 
         timerRIGHT += 1
 
@@ -253,36 +280,61 @@ def Ingame():
         Map_x += Geschwindigkeit
         Ash.place(x = Map_x, y = Map_y)
 
-    Testmap = Label(ingame_fenster, image =testmap) 
-    Testmap.place(x = 0, y = 0)
+    if Ash_Haus_1 == True:
+        Testmap = Label(ingame_fenster, image =testmap) 
+        Testmap.place(x = 0, y = 0)
+    elif Ash_Haus_2 == True:
+        pass
     
     ingame_fenster.bind('<Key-Up>', Key_Up)
     ingame_fenster.bind('<Key-Down>', Key_Down)
     ingame_fenster.bind('<Key-Left>', Key_Left)
     ingame_fenster.bind('<Key-Right>', Key_Right)
 
-    #Sprinten
-    ingame_fenster.bind('<Key-G>', Sprint)
-    ingame_fenster.bind('<Key-g>', Sprint)
-
-    #Entsprinten
-    ingame_fenster.bind('<Key-F>', Sprint_Beenden)
-    ingame_fenster.bind('<Key-f>', Sprint_Beenden)
-
     Ash = Label(ingame_fenster, image = Nach_Unten_stehen, bd = 0)
     Ash.place(x = Map_x, y = Map_y)
 
-    sprintlabel = Label(ingame_fenster, text = 'Sprinten (G), Entsprinten (F)', font = ('Terminator Two', 10))
-    sprintlabel.configure(bg = 'light blue', fg = 'dark blue')
-    sprintlabel.place(x = 550, y = 570)
+    if sprinten == True:
+        sprintlabel = Label(ingame_fenster, text = 'Sprinten (G), Entsprinten (F)', font = ('Terminator Two', 10))
+        sprintlabel.configure(bg = 'light blue', fg = 'dark blue')
+        sprintlabel.place(x = 550, y = 570)
 
-    def Pos(event):
+
+
+    ingame_fenster.bind('<Key-o>', Pos)
+    ingame_fenster.bind('<Key-O>', Pos)
+
+    def Ingame_2():
+        global Testmap, Alle_Objekte
+        del Alle_Objekte
+        def Alle_Objekte():
+            pass
+        Testmap.destroy()
+
+    def Aktion(event):
+        try:
+            if(Pickachu == True):
+                print('Dies ist ein Pickachu!!!!!')
+        except:
+            pass
+
+    fenster.bind('<Key-k>', Aktion)
+    fenster.bind('<Key-K>', Aktion)
+
+def Maus_Pos(event):
+    global ingame_fenster
+    x, y = event.x, event.y
+    print('x = {}, y = {}'.format(x, y))
+    ingame_fenster.bind('<Motion>', Maus_Pos)
+    try:
+        fenster.bind('<Key-x>', Maus_Pos)
+    except:
+        pass
+    
+def Pos(event):
         print('-'*20)
         print('Map_x = {}, Map_y = {}'.format(Map_x, Map_y))
         print('-'*20)
-
-    ingame_fenster.bind('<Key-o>', Pos)
-    ingame_fenster.bind('<Key-O>', Pos) 
 
 def weiter1():
     nextbutton.configure(command = weiter2)
