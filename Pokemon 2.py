@@ -5,6 +5,8 @@ from tkinter import ttk
 import time
 import random
 
+Ash_Transparent = True
+
 fenster = Tk()
 fenster.title('The Elder Scrolls 6: Pokemon')
 fenster.geometry('800x600')
@@ -33,18 +35,36 @@ glumanda_button = PhotoImage(file = pfad+'Glumanda_Button.gif')
 bisasam_button = PhotoImage(file = pfad+'Bisasam_Button.gif')
 aktionsblase = PhotoImage(file = pfad+'Aktionsblase.gif')
 
-Nach_Links_stehen = PhotoImage(file = pfad+'Von_links_stehen.gif')
-Nach_Links_schritt1 = PhotoImage(file = pfad+'Von_links_schritt1.gif')
-Nach_Links_schritt2 = PhotoImage(file = pfad+'Von_links_schritt2.gif')
-Nach_Rechts_stehen = PhotoImage(file = pfad+'Von_rechts_stehen.gif')
-Nach_Rechts_schritt1 = PhotoImage(file = pfad+'Von_rechts_schritt1.gif')
-Nach_Rechts_schritt2 = PhotoImage(file = pfad+'Von_rechts_schritt2.gif')
-Nach_Unten_stehen = PhotoImage(file = pfad+'Von_vorne_stehen.gif')
-Nach_Unten_schritt1 = PhotoImage(file = pfad+'Von_vorne_schritt1.gif')
-Nach_Unten_schritt2 = PhotoImage(file = pfad+'Von_vorne_schritt2.gif')
-Nach_Oben_stehen = PhotoImage(file = pfad+'Von_hinten_stehen.gif')
-Nach_Oben_schritt1 = PhotoImage(file = pfad+'Von_hinten_schritt1.gif')
-Nach_Oben_schritt2 = PhotoImage(file = pfad+'Von_hinten_schritt2.gif')
+if Ash_Transparent == False:
+
+    Nach_Links_stehen = PhotoImage(file = pfad+'Von_links_stehen.gif')
+    Nach_Links_schritt1 = PhotoImage(file = pfad+'Von_links_schritt1.gif')
+    Nach_Links_schritt2 = PhotoImage(file = pfad+'Von_links_schritt2.gif')
+    Nach_Rechts_stehen = PhotoImage(file = pfad+'Von_rechts_stehen.gif')
+    Nach_Rechts_schritt1 = PhotoImage(file = pfad+'Von_rechts_schritt1.gif')
+    Nach_Rechts_schritt2 = PhotoImage(file = pfad+'Von_rechts_schritt2.gif')
+    Nach_Unten_stehen = PhotoImage(file = pfad+'Von_vorne_stehen.gif')
+    Nach_Unten_schritt1 = PhotoImage(file = pfad+'Von_vorne_schritt1.gif')
+    Nach_Unten_schritt2 = PhotoImage(file = pfad+'Von_vorne_schritt2.gif')
+    Nach_Oben_stehen = PhotoImage(file = pfad+'Von_hinten_stehen.gif')
+    Nach_Oben_schritt1 = PhotoImage(file = pfad+'Von_hinten_schritt1.gif')
+    Nach_Oben_schritt2 = PhotoImage(file = pfad+'Von_hinten_schritt2.gif')
+
+elif Ash_Transparent == True:
+
+    pfad2 = 'Ash_Transparent/'
+    Nach_Links_stehen = PhotoImage(file = pfad2+'Von_links_stehen.png')
+    Nach_Links_schritt1 = PhotoImage(file = pfad2+'Von_links_schritt1.png')
+    Nach_Links_schritt2 = PhotoImage(file = pfad2+'Von_links_schritt2.png')
+    Nach_Rechts_stehen = PhotoImage(file = pfad2+'Von_rechts_stehen.png')
+    Nach_Rechts_schritt1 = PhotoImage(file = pfad2+'Von_rechts_schritt1.png')
+    Nach_Rechts_schritt2 = PhotoImage(file = pfad2+'Von_rechts_schritt2.png')
+    Nach_Unten_stehen = PhotoImage(file = pfad2+'Von_vorne_stehen.png')
+    Nach_Unten_schritt1 = PhotoImage(file = pfad2+'Von_vorne_schritt1.png')
+    Nach_Unten_schritt2 = PhotoImage(file = pfad2+'Von_vorne_schritt2.png')
+    Nach_Oben_stehen = PhotoImage(file = pfad2+'Von_hinten_stehen.png')
+    Nach_Oben_schritt1 = PhotoImage(file = pfad2+'Von_hinten_schritt1.png')
+    Nach_Oben_schritt2 = PhotoImage(file = pfad2+'Von_hinten_schritt2.png')
 
 testmap = PhotoImage(file = pfad+'Anfangsraum.gif')
 
@@ -154,16 +174,16 @@ def Ingame():
             #Glastisch
                 #Vorbeigehen können
             if (Map_x > 365 and Map_y > 405):
-                if(Map_x > 365 and Map_y > 400 and Map_x < 480 and Map_y <= 407):
+                if(Map_x > 365 and Map_y > 400 and Map_x < 480 and Map_y <= 412):
                     Map_y += Geschwindigkeit
             
             elif (Map_x > 480 and Map_y > 290):
-                if(Map_x > 475 and Map_y > 290 and Map_y < 480 and Map_x <= 482):
+                if(Map_x > 475 and Map_y > 290 and Map_y < 480 and Map_x <= 486):
                     Map_x += Geschwindigkeit
                 #Obere und linke Seite
-            elif(Map_x > 365 and Map_y > 290 and Map_x < 370 and not Map_x > 460):
+            elif(Map_x > 365 and Map_y > 290 and Map_x < 370 and not Map_x > 466):
                 Map_x -= Geschwindigkeit
-            elif(Map_x > 365 and Map_y > 290 and Map_x > 370 and not Map_y > 400):
+            elif(Map_x > 365 and Map_y > 285 and Map_x < 400 and not Map_y > 406):
                 Map_y -= Geschwindigkeit
 
             #Couch
@@ -180,14 +200,38 @@ def Ingame():
             elif(Map_x > 285 and Map_y > 300 and Map_x < 360 and not Map_x > 365 and Map_y < 410):
                 Map_x -= Geschwindigkeit
             elif(Map_x > 285 and Map_y > 295 and Map_x < 360 and not Map_y > 315):
-                Map_y -= Geschwindigkeit     
-                
+                Map_y -= Geschwindigkeit
+
+                #Couch Pumelluff(Objekt)
+            if(Map_x > 285 and Map_y > 330 and not Map_x > 367 and Map_y < 370):
+                if(AshDirection == 'Left'):
+                    Pumelluff = True
+                if(Pumelluff == True and AshDirection != 'Left'):
+                    Pumelluff = False
+                    Map_Hit = False
+                    try:
+                        Aktionsblase.destroy()
+                    except:
+                        pass
                 
 
             #Rand
                 #OBEN
             if(Map_y < 215):
                 Map_y = 215
+                #Rand oben, Uhr (Objekt)
+            if(Map_x > 435 and Map_y < 220 and Map_x < 455):
+                if(AshDirection == 'Up'):
+                    Uhr = True
+                if(Uhr == True and AshDirection != 'Up'):
+                    Uhr = False
+                    Map_Hit = False
+                    try:
+                        Aktionsblase.destroy()
+                    except:
+                        pass
+
+            
                 #UNTEN
             if(Map_y > 444): 
                 Map_y = 444
@@ -309,7 +353,9 @@ def Ingame():
         sprintlabel.configure(bg = 'light blue', fg = 'dark blue')
         sprintlabel.place(x = 550, y = 570)
 
-
+    aktionslabel = Label(ingame_fenster, text = 'Aktion(K)', font = ('Terminator Two', 15))
+    aktionslabel.configure(bg = 'light blue', fg = 'dark blue')
+    aktionslabel.place(x = 550, y = 570)
 
     ingame_fenster.bind('<Key-o>', Pos)
     ingame_fenster.bind('<Key-O>', Pos)
@@ -321,18 +367,41 @@ def Ingame():
             pass
         Testmap.destroy()
         
+        
+        
     Map_Hit = False
     def Aktion(event):
-        global AshDirection, Pikachu, Aktionsblase, Map_x, Map_y, Map_Hit
+        global AshDirection, Pikachu, Aktionsblase, Map_x, Map_y, Map_Hit, Pumelluff, Uhr, Buch
         if(Pikachu == True):
             if Map_Hit == False:
                 Aktionsblase = Label(fenster, image = aktionsblase,
                              compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
                 Aktionsblase.place(x = 175, y = 475)
-                Aktionsblase.configure(text = 'Dies ist ein Pikachu!\naber kein echtes...')
+                Aktionsblase.configure(text = 'Dies ist ein Pikachu !\naber kein echtes...')
                 Map_Hit = True
             elif Map_Hit == True:
                 pass
+            
+        elif(Pumelluff == True):
+            if Map_Hit == False:
+                Aktionsblase = Label(fenster, image = aktionsblase,
+                             compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                Aktionsblase.place(x = 175, y = 475)
+                Aktionsblase.configure(text = 'Ein pumeliges Pumelluff !')
+                Map_Hit = True
+            elif Map_Hit == True:
+                pass
+
+        elif(Uhr == True):
+            if Map_Hit == False:
+                Aktionsblase = Label(fenster, image = aktionsblase,
+                             compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                Aktionsblase.place(x = 175, y = 475)
+                Aktionsblase.configure(text = 'Die Uhr ist sehr verstaubt...\nfinde etwas um sie\nsauber zu machen.')
+                Map_Hit = True
+            elif Map_Hit == True:
+                pass
+                
             
 
         
