@@ -67,6 +67,7 @@ elif Ash_Transparent == True:
     Nach_Oben_schritt2 = PhotoImage(file = pfad2+'Von_hinten_schritt2.png')
 
 ingame_map = PhotoImage(file = pfad+'Anfangsraum.gif')
+ash_haus_wohnzimmer = PhotoImage(pfad+'Ash_Haus_Wohnzimmer.gif')
 
 ############################
 
@@ -425,8 +426,8 @@ def Ingame():
         del Alle_Objekte
         def Alle_Objekte():
             pass
-        Ingame_map.destroy()
-        
+        #Ingame_map.delete('Map')
+        Ingame_map.itemconfig('Map', image = ash_haus_wohnzimmer)        
         
         
     Map_Hit = False
