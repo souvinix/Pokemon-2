@@ -66,7 +66,7 @@ elif Ash_Transparent == True:
     Nach_Oben_schritt1 = PhotoImage(file = pfad2+'Von_hinten_schritt1.png')
     Nach_Oben_schritt2 = PhotoImage(file = pfad2+'Von_hinten_schritt2.png')
 
-testmap = PhotoImage(file = pfad+'Anfangsraum.gif')
+ingame_map = PhotoImage(file = pfad+'Anfangsraum.gif')
 
 ############################
 
@@ -102,7 +102,7 @@ def Ingame_Escape(event):
 
 def Ingame():
     global timerRIGHT, timerLEFT, timerDOWN, timerUP
-    global Map_x, Map_y, Geschwindigkeit, Testmap, Ash_Haus_1, Map_Hit
+    global Map_x, Map_y, Geschwindigkeit, Ingame_map, Ash_Haus_1, Map_Hit
     global ingame_fenster, Alle_Objekte, Ash, Pikachu, Buch, Uhr, Pumelluff, Aktionsblase
     
     Ash_Haus_1 = True
@@ -124,9 +124,9 @@ def Ingame():
 ################################
 
     Schrittgeschwindigkeit1 = 0 #Muss 0 bleiben
-    Schrittgeschwindigkeit2 = 7
-    Schrittgeschwindigkeit3 = 14
-    Schrittgeschwindigkeit4 = 21
+    Schrittgeschwindigkeit2 = 6
+    Schrittgeschwindigkeit3 = 12
+    Schrittgeschwindigkeit4 = 18
     timerUP = 0
     timerDOWN = 0
     timerLEFT = 0
@@ -243,100 +243,128 @@ def Ingame():
                 Map_x = 560
     
     def Key_Up(event):
-        global Map_x, Map_y, timerUP, AshDirection
+        global Map_x, Map_y, timerUP, AshDirection, Ingame_map, timerDOWN, timerLEFT, timerRIGHT
         timerUP += 1
+        timerLEFT = 0
+        timerDOWN = 0
+        timerRIGHT = 0
 
         AshDirection = 'Up'
         
-
         if (timerUP >= Schrittgeschwindigkeit1):
-            Ash.configure(image = Nach_Oben_schritt1)
+            Ingame_map.delete("Ash")
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Oben_schritt1, tags = 'Ash')
         if (timerUP >= Schrittgeschwindigkeit2):
-            Ash.configure(image = Nach_Oben_stehen)
+            Ingame_map.delete("Ash")
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Oben_stehen, tags = 'Ash')
         if (timerUP >= Schrittgeschwindigkeit3):
-            Ash.configure(image = Nach_Oben_schritt2)
+            Ingame_map.delete("Ash")
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Oben_schritt2, tags = 'Ash')
         if (timerUP >= Schrittgeschwindigkeit4):
+            Ingame_map.delete("Ash")
             timerUP = 0
         if(timerUP == 0):
-            Ash.configure(image = Nach_Oben_stehen)
+            Ingame_map.delete("Ash")
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Oben_stehen)
 
         Alle_Objekte()
         
         Map_y -= Geschwindigkeit
-        Ash.place(x = Map_x, y = Map_y)
         
     def Key_Down(event):
-        global Map_x, Map_y, timerDOWN, AshDirection
+        global Map_x, Map_y, timerDOWN, AshDirection, Ingame_map, timerLEFT, timerRIGHT, timerUP
 
         AshDirection = 'Down'
 
         timerDOWN += 1
+        timerUP = 0
+        timerLEFT = 0
+        timerRIGHT = 0
 
         if (timerDOWN >= Schrittgeschwindigkeit1):
-            Ash.configure(image = Nach_Unten_schritt1)
+            Ingame_map.delete("Ash")
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Unten_schritt1, tags = 'Ash')
         if (timerDOWN >= Schrittgeschwindigkeit2):
-            Ash.configure(image = Nach_Unten_stehen)
+            Ingame_map.delete("Ash")
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Unten_stehen, tags = 'Ash')
         if (timerDOWN >= Schrittgeschwindigkeit3):
-            Ash.configure(image = Nach_Unten_schritt2)
+            Ingame_map.delete("Ash")
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Unten_schritt2, tags = 'Ash')
         if (timerDOWN >= Schrittgeschwindigkeit4):
+            Ingame_map.delete("Ash")
             timerDOWN = 0
         if(timerDOWN == 0):
-            Ash.configure(image = Nach_Unten_stehen)
+            Ingame_map.delete("Ash")
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Unten_stehen, tags = 'Ash')
 
         Alle_Objekte()
 
         Map_y += Geschwindigkeit
-        Ash.place(x = Map_x, y = Map_y)
       
     def Key_Left(event):
-        global Map_x, Map_y, timerLEFT, AshDirection
+        global Map_x, Map_y, timerLEFT, AshDirection, Ingame_map, timerRIGHT, timerUP, timerDOWN
 
         AshDirection = 'Left'
 
+        timerDOWN = 0
+        timerUP = 0
+        timerRIGHT = 0
         timerLEFT += 1
 
         if (timerLEFT >= Schrittgeschwindigkeit1):
-            Ash.configure(image = Nach_Links_schritt1)
+            Ingame_map.delete("Ash")
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Links_schritt1, tags = 'Ash')
         if (timerLEFT >= Schrittgeschwindigkeit2):
-            Ash.configure(image = Nach_Links_stehen)
+            Ingame_map.delete("Ash")
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Links_stehen, tags = 'Ash')
         if (timerLEFT >= Schrittgeschwindigkeit3):
-            Ash.configure(image = Nach_Links_schritt2)
+            Ingame_map.delete("Ash")
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Links_schritt2, tags = 'Ash')
         if (timerLEFT >= Schrittgeschwindigkeit4):
+            Ingame_map.delete("Ash")
             timerLEFT = 0
         if(timerLEFT == 0):
-            Ash.configure(image = Nach_Links_stehen)
+            Ingame_map.delete("Ash")
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Links_stehen, tags = 'Ash')
 
         Alle_Objekte()
 
         Map_x -= Geschwindigkeit
-        Ash.place(x = Map_x, y = Map_y)
 
     def Key_Right(event):
-        global Map_x, Map_y, timerRIGHT, AshDirection
+        global Map_x, Map_y, timerRIGHT, AshDirection, Ingame_map, timerUP, timerDOWN, timerLEFT
 
         AshDirection = 'Right'
 
+        timerDOWN = 0
+        timerUP = 0
+        timerLEFT = 0
         timerRIGHT += 1
 
         if (timerRIGHT >= Schrittgeschwindigkeit1):
-            Ash.configure(image = Nach_Rechts_schritt1)
+            Ingame_map.delete("Ash")
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Rechts_schritt1, tags = 'Ash')
         if (timerRIGHT >= Schrittgeschwindigkeit2):
-            Ash.configure(image = Nach_Rechts_stehen)
+            Ingame_map.delete("Ash")
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Rechts_stehen, tags = 'Ash')
         if (timerRIGHT >= Schrittgeschwindigkeit3):
-            Ash.configure(image = Nach_Rechts_schritt2)
+            Ingame_map.delete("Ash")
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Rechts_schritt2, tags = 'Ash')
         if (timerRIGHT >= Schrittgeschwindigkeit4):
+            Ingame_map.delete("Ash")
             timerRIGHT = 0
         if(timerRIGHT == 0):
-            Ash.configure(image = Nach_Rechts_stehen)
+            Ingame_map.delete("Ash")
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Rechts_stehen, tags = 'Ash')
 
         Alle_Objekte()
 
         Map_x += Geschwindigkeit
-        Ash.place(x = Map_x, y = Map_y)
 
     if Ash_Haus_1 == True:
-        Testmap = Label(ingame_fenster, image =testmap) 
-        Testmap.place(x = 0, y = 0)
+        Ingame_map = Canvas(ingame_fenster, width = 800, height = 595)
+        Ingame_map.place(x = 0, y = 0)
+        Ingame_map.create_image(400,300, image = ingame_map, tags = 'Map') 
     elif Ash_Haus_2 == True:
         pass
     
@@ -344,9 +372,10 @@ def Ingame():
     ingame_fenster.bind('<Key-Down>', Key_Down)
     ingame_fenster.bind('<Key-Left>', Key_Left)
     ingame_fenster.bind('<Key-Right>', Key_Right)
-
-    Ash = Label(ingame_fenster, image = Nach_Unten_stehen, bd = 0)
-    Ash.place(x = Map_x, y = Map_y)
+    
+    #Hier wird "Ash" definiert
+    Ingame_map.create_image(Map_x, Map_y, image = Nach_Unten_stehen, tags = 'Ash') 
+    
 
     if sprinten == True:
         sprintlabel = Label(ingame_fenster, text = 'Sprinten (G), Entsprinten (F)', font = ('Terminator Two', 10))
@@ -361,11 +390,11 @@ def Ingame():
     ingame_fenster.bind('<Key-O>', Pos)
 
     def Ingame_2():
-        global Testmap, Alle_Objekte
+        global Ingame_map, Alle_Objekte
         del Alle_Objekte
         def Alle_Objekte():
             pass
-        Testmap.destroy()
+        Ingame_map.destroy()
         
         
         
