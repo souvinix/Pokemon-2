@@ -173,37 +173,68 @@ def Ingame():
 
             #Glastisch
                 #Vorbeigehen können
-            if (Map_x > 365 and Map_y > 405):
-                if(Map_x > 365 and Map_y > 400 and Map_x < 480 and Map_y <= 412):
+            if (Map_x > 385 and Map_y > 405):
+                if(Map_x > 385 and Map_y > 400 and Map_x < 480 and Map_y <= 412):
                     Map_y += Geschwindigkeit
             
-            elif (Map_x > 480 and Map_y > 290):
-                if(Map_x > 475 and Map_y > 290 and Map_y < 480 and Map_x <= 486):
+            elif (Map_x > 475 and Map_y > 330):
+                if(Map_x < 490 and Map_y < 405):
                     Map_x += Geschwindigkeit
+
                 #Obere und linke Seite
-            elif(Map_x > 365 and Map_y > 290 and Map_x < 370 and not Map_x > 466):
+            if(Map_x > 380 and Map_y > 330 and Map_x < 390 and Map_y < 405):
                 Map_x -= Geschwindigkeit
-            elif(Map_x > 365 and Map_y > 285 and Map_x < 400 and not Map_y > 406):
+            elif(Map_x > 395 and Map_y > 305 and Map_x < 480 and Map_y < 325):
                 Map_y -= Geschwindigkeit
+
+
+                #Buch, von oben (Objekt)
+            if(Map_x > 440 and Map_x < 465 and Map_y > 300 and Map_y < 310):
+                if(AshDirection == 'Down'):
+                    Buch = True
+                if(Buch == True and AshDirection != 'Down'):
+                    Buch = False
+                    Map_Hit = False
+                    try:
+                        Aktionsblase.destroy()
+                    except:
+                        pass
+
+                #Buch, von rechts (Objekt)
+            elif(Map_x > 485 and Map_x < 495 and Map_y > 330 and Map_y < 360):
+                if(AshDirection == 'Left'):
+                    Buch = True
+                if(Buch == True and AshDirection != 'Left'):
+                    Buch = False
+                    Map_Hit = False
+                    try:
+                        Aktionsblase.destroy()
+                    except:
+                        pass
+
+                
 
             #Couch
                 #Vorbeigehen können
-            if (Map_x > 300 and Map_y > 410):
+            if (Map_x > 305 and Map_y > 410):
                 if(Map_x > 300 and Map_y > 410 and Map_x < 365 and Map_y <= 415):
                     Map_y += Geschwindigkeit
                     
-            elif (Map_x > 360 and Map_y > 300):
-                if(Map_x > 360 and Map_y > 300 and Map_x < 365 and Map_y <= 415):
+            elif (Map_x > 365 and Map_y > 340):
+                if(Map_x < 377 and Map_y < 405):
                     Map_x += Geschwindigkeit
 
                 #Obere und linke Seite
-            elif(Map_x > 285 and Map_y > 300 and Map_x < 360 and not Map_x > 365 and Map_y < 410):
+            if(Map_x > 300 and Map_y > 320 and Map_x < 310 and Map_y < 400):
                 Map_x -= Geschwindigkeit
-            elif(Map_x > 285 and Map_y > 295 and Map_x < 360 and not Map_y > 315):
+                
+            elif(Map_x > 305 and Map_y > 310 and Map_x < 350 and Map_y < 330):
                 Map_y -= Geschwindigkeit
 
+                
+
                 #Couch Pumelluff(Objekt)
-            if(Map_x > 285 and Map_y > 330 and not Map_x > 367 and Map_y < 370):
+            if(Map_x > 365 and Map_y > 350 and Map_x < 380 and Map_y < 380):
                 if(AshDirection == 'Left'):
                     Pumelluff = True
                 if(Pumelluff == True and AshDirection != 'Left'):
@@ -265,7 +296,7 @@ def Ingame():
             timerUP = 0
         if(timerUP == 0):
             Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Oben_stehen)
+            Ingame_map.create_image(Map_x, Map_y, image = Nach_Oben_stehen, tags = 'Ash')
 
         Alle_Objekte()
         
@@ -380,11 +411,11 @@ def Ingame():
     if sprinten == True:
         sprintlabel = Label(ingame_fenster, text = 'Sprinten (G), Entsprinten (F)', font = ('Terminator Two', 10))
         sprintlabel.configure(bg = 'light blue', fg = 'dark blue')
-        sprintlabel.place(x = 550, y = 570)
+        sprintlabel.place(x = 550, y = 560)
 
     aktionslabel = Label(ingame_fenster, text = 'Aktion(K)', font = ('Terminator Two', 15))
     aktionslabel.configure(bg = 'light blue', fg = 'dark blue')
-    aktionslabel.place(x = 550, y = 570)
+    aktionslabel.place(x = 550, y = 560)
 
     ingame_fenster.bind('<Key-o>', Pos)
     ingame_fenster.bind('<Key-O>', Pos)
@@ -427,6 +458,16 @@ def Ingame():
                              compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
                 Aktionsblase.place(x = 175, y = 475)
                 Aktionsblase.configure(text = 'Die Uhr ist sehr verstaubt...\nfinde etwas um sie\nsauber zu machen.')
+                Map_Hit = True
+            elif Map_Hit == True:
+                pass
+            
+        elif(Buch == True):
+            if Map_Hit == False:
+                Aktionsblase = Label(fenster, image = aktionsblase,
+                             compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                Aktionsblase.place(x = 175, y = 475)
+                Aktionsblase.configure(text = '"Das Legendäre Pokemon:\n M......"\nder rest ist verkratzt..')
                 Map_Hit = True
             elif Map_Hit == True:
                 pass
