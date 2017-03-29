@@ -139,13 +139,13 @@ def Ingame():
 
         if Ash_Haus_1 == True:
             #Bett
-            if (Map_x < 297 and Map_y < 280 and Map_x < Map_y):
+            if (Map_x < 300 and Map_y < 280 and Map_x < Map_y):
                 Map_y += Geschwindigkeit
-            elif (Map_x < 297 and Map_y < 280 and Map_x > Map_y):
+            elif (Map_x < 315 and Map_y < 280 and Map_x > 310):
                 Map_x += Geschwindigkeit
                 
             #Bett Pikachu(Objekt)
-            if (Map_x < 305 and Map_y < 280):
+            if (Map_x < 320 and Map_y < 250):
                 if(AshDirection == 'Left'):
                     Pikachu = True
                 if(Pikachu == True and AshDirection != 'Left'):
@@ -157,18 +157,18 @@ def Ingame():
                         pass
                     
             #Treppe
-            if (Map_x > 494 and Map_y < 285 and Map_x < 500):
+            if (Map_x > 510 and Map_y < 285 and Map_x < 515):
                 Map_x -= Geschwindigkeit
-            elif (Map_x > 494 and Map_y < 285 and Map_x > 500):
+            elif (Map_x > 510 and Map_y < 285 and Map_x > 515):
                 Map_y += Geschwindigkeit
             #Treppe(Funktion)
-            elif(Map_x > 490 and Map_y < 230):
+            if(Map_x > 505 and Map_y < 260):
                 Ingame_2()
 
             #Pflanze
-            if (Map_x > 520 and Map_y > 400 and Map_x > 525):
+            if (Map_x > 535 and Map_y > 400):
                 Map_x -= Geschwindigkeit
-            elif (Map_x > 520 and Map_y > 380 and Map_x > 525):
+            elif (Map_x > 550 and Map_y > 390 and not Map_y > 420):
                 Map_y -= Geschwindigkeit
 
             #Glastisch
@@ -218,9 +218,9 @@ def Ingame():
             #Rand
                 #OBEN
             if(Map_y < 215):
-                Map_y = 215
+                Map_y += Geschwindigkeit
                 #Rand oben, Uhr (Objekt)
-            if(Map_x > 435 and Map_y < 220 and Map_x < 455):
+            if(Map_x > 440 and Map_y < 225 and Map_x < 465):
                 if(AshDirection == 'Up'):
                     Uhr = True
                 if(Uhr == True and AshDirection != 'Up'):
@@ -233,14 +233,14 @@ def Ingame():
 
             
                 #UNTEN
-            if(Map_y > 444): 
-                Map_y = 444
+            if(Map_y > 460): 
+                Map_y -= Geschwindigkeit
                 #LINKS
-            if (Map_x < 206): 
-                Map_x = 206
+            if (Map_x < 215): 
+                Map_x += Geschwindigkeit
                 #RECHTS
-            if(Map_x > 560):
-                Map_x = 560
+            if(Map_x > 580):
+                Map_x -= Geschwindigkeit
     
     def Key_Up(event):
         global Map_x, Map_y, timerUP, AshDirection, Ingame_map, timerDOWN, timerLEFT, timerRIGHT
