@@ -67,7 +67,7 @@ elif Ash_Transparent == True:
     Nach_Oben_schritt2 = PhotoImage(file = pfad2+'Von_hinten_schritt2.png')
 
 ingame_map = PhotoImage(file = pfad+'Anfangsraum.gif')
-ash_haus_wohnzimmer = PhotoImage(pfad+'Ash_Haus_Wohnzimmer.gif')
+ash_haus_wohnzimmer = PhotoImage(file = pfad+'AshHausWohnzimmer.gif')
 
 ############################
 
@@ -83,11 +83,13 @@ sprinten = False
 ############################
 #########Meine Räume########
 ############################
+#Mit Ash_Pos:
 
-Ash_Haus_1 = False
-Ash_Haus_2 = False
-Ash_Haus_3 = False
-Neuborkia = False
+    #Ash_Haus_Zimmer
+    #Ash_Haus_Wohnzimmer
+    #Ash_Haus_Küche
+
+    #Neuborkia
 
 ############################
 ########Meine Objekte#######
@@ -98,15 +100,17 @@ Pikachu = False
 Uhr = False
 Pumelluff = False
 
+############################
+
 def Ingame_Escape(event):
     Ingame()
 
 def Ingame():
     global timerRIGHT, timerLEFT, timerDOWN, timerUP
-    global Map_x, Map_y, Geschwindigkeit, Ingame_map, Ash_Haus_1, Map_Hit
+    global Map_x, Map_y, Geschwindigkeit, Ingame_map, Ash_Pos, Map_Hit
     global ingame_fenster, Alle_Objekte, Ash, Pikachu, Buch, Uhr, Pumelluff, Aktionsblase
     
-    Ash_Haus_1 = True
+    Ash_Pos = 'Ash_Haus_Zimmer'
     try:
         Hauptmenü_Destroy()
         test_ingame.destroy()
@@ -138,7 +142,7 @@ def Ingame():
     def Alle_Objekte():
         global Map_x, Map_y, AshDirection, Pikachu, Buch, Uhr, Pumelluff, Aktionsblase, Map_Hit
 
-        if Ash_Haus_1 == True:
+        if Ash_Pos == 'Ash_Haus_Zimmer':
             #Bett
             if (Map_x < 300 and Map_y < 280 and Map_x < Map_y):
                 Map_y += Geschwindigkeit
@@ -273,6 +277,72 @@ def Ingame():
                 #RECHTS
             if(Map_x > 580):
                 Map_x -= Geschwindigkeit
+
+        elif Ash_Pos == 'Ash_Haus_Wohnzimmer':
+            
+                 #Rand
+            #Linke Wand
+            if(Map_x < 220):
+                Map_x += Geschwindigkeit
+            #Untere Wand
+            elif(Map_y > 470):
+                Map_y -= Geschwindigkeit
+            #Rechte Wand
+            elif(Map_x > 585):
+                Map_x -= Geschwindigkeit
+            #Obere Wand
+            elif(Map_y < 174):
+                Map_y += Geschwindigkeit
+
+                #Bücherregal
+            if(Map_x > 505 and Map_x < 515 and Map_y > 170 and Map_y < 220):
+                Map_x -= Geschwindigkeit
+            elif(Map_x > 517 and Map_x < 590 and Map_y > 210 and Map_y < 220):
+                Map_y += Geschwindigkeit
+
+                #Holztisch
+            if(Map_x > 520 and Map_x < 590 and Map_y > 240 and Map_y < 255):
+                Map_y -= Geschwindigkeit
+            elif(Map_x > 510 and Map_x < 520 and Map_y > 255 and Map_y < 320):
+                Map_x -= Geschwindigkeit
+            elif(Map_x > 520 and Map_x < 590 and Map_y > 325 and Map_y < 335):
+                Map_y += Geschwindigkeit
+
+                #Treppe
+            if(Map_x > 280 and Map_x < 290 and Map_y > 170 and Map_y < 255):
+                Map_x += Geschwindigkeit
+            elif(Map_x > 220 and Map_x < 270 and Map_y > 250 and Map_y < 265):
+                Map_y += Geschwindigkeit
+
+                #Pflanze
+            if(Map_x > 220 and Map_x < 260 and Map_y > 265 and Map_y < 295):
+                Map_x += Geschwindigkeit
+            elif(Map_x > 220 and Map_x < 250 and Map_y > 295 and Map_y < 310):
+                Map_y += Geschwindigkeit
+
+                #Fernseher UND Konsole
+            if(Map_x > 349 and Map_x < 360 and Map_y > 170 and Map_y < 210):
+                Map_x -= Geschwindigkeit
+            elif(Map_x > 350 and Map_x < 490 and Map_y > 215 and Map_y < 225):
+                Map_y += Geschwindigkeit
+            elif(Map_x > 480 and Map_x < 495 and Map_y > 170 and Map_y < 210):
+                Map_x += Geschwindigkeit
+
+                #Mutter (Sitzt auf einem Stuhl)
+                    #Von links
+            if (Map_x > 340 and Map_x < 347 and Map_y > 285 and Map_y < 370):
+                Map_x -= Geschwindigkeit
+                    #Von unten
+            elif(Map_x > 345 and Map_x < 415 and Map_y > 360 and Map_y < 375):
+                Map_y += Geschwindigkeit
+                    #Von rechts
+            elif(Map_x > 405 and Map_x < 415 and Map_y > 285 and Map_y < 370):
+                Map_x += Geschwindigkeit
+                    #Von oben
+            elif(Map_x > 345 and Map_x < 415 and Map_y > 280 and Map_y < 290):
+                Map_y -= Geschwindigkeit
+                
+    
     
     def Key_Up(event):
         global Map_x, Map_y, timerUP, AshDirection, Ingame_map, timerDOWN, timerLEFT, timerRIGHT
@@ -393,11 +463,11 @@ def Ingame():
 
         Map_x += Geschwindigkeit
 
-    if Ash_Haus_1 == True:
+    if Ash_Pos == 'Ash_Haus_Zimmer':
         Ingame_map = Canvas(ingame_fenster, width = 800, height = 595)
         Ingame_map.place(x = 0, y = 0)
         Ingame_map.create_image(400,300, image = ingame_map, tags = 'Map') 
-    elif Ash_Haus_2 == True:
+    elif Ash_Pos == 'Ash_Haus_Wohnzimmer':
         pass
     
     ingame_fenster.bind('<Key-Up>', Key_Up)
@@ -422,17 +492,24 @@ def Ingame():
     ingame_fenster.bind('<Key-O>', Pos)
 
     def Ingame_2():
-        global Ingame_map, Alle_Objekte
-        del Alle_Objekte
-        def Alle_Objekte():
-            pass
-        #Ingame_map.delete('Map')
-        Ingame_map.itemconfig('Map', image = ash_haus_wohnzimmer)        
+        global Ingame_map, Alle_Objekte, Map_x, Map_y, AshDirection, Geschwindigkeit, Ash_Pos
+        Ash_Pos = 'Ash_Haus_Wohnzimmer'
+           
+
+        time.sleep(0.5)
+        Map_x = 293
+        Map_y = 210
+        AshDirection = 'Left'
+
+        Ingame_map.itemconfig('Map', image = ash_haus_wohnzimmer, tags = 'New_Map')
         
         
     Map_Hit = False
-    def Aktion(event):
-        global AshDirection, Pikachu, Aktionsblase, Map_x, Map_y, Map_Hit, Pumelluff, Uhr, Buch
+def Aktion(event):
+    global AshDirection, Pikachu, Aktionsblase, Map_x, Map_y, Map_Hit, Pumelluff, Uhr, Buch
+
+    #Ash's Zimmer
+    if Ash_Pos == 'Ash_Haus_Zimmer':
         if(Pikachu == True):
             if Map_Hit == False:
                 Aktionsblase = Label(fenster, image = aktionsblase,
@@ -442,11 +519,11 @@ def Ingame():
                 Map_Hit = True
             elif Map_Hit == True:
                 pass
-            
+                
         elif(Pumelluff == True):
             if Map_Hit == False:
                 Aktionsblase = Label(fenster, image = aktionsblase,
-                             compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                                compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
                 Aktionsblase.place(x = 175, y = 475)
                 Aktionsblase.configure(text = 'Ein pumeliges Pumelluff !')
                 Map_Hit = True
@@ -456,29 +533,31 @@ def Ingame():
         elif(Uhr == True):
             if Map_Hit == False:
                 Aktionsblase = Label(fenster, image = aktionsblase,
-                             compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                                compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
                 Aktionsblase.place(x = 175, y = 475)
                 Aktionsblase.configure(text = 'Die Uhr ist sehr verstaubt...\nfinde etwas um sie\nsauber zu machen.')
                 Map_Hit = True
             elif Map_Hit == True:
                 pass
-            
+                
         elif(Buch == True):
             if Map_Hit == False:
                 Aktionsblase = Label(fenster, image = aktionsblase,
-                             compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                                compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
                 Aktionsblase.place(x = 175, y = 475)
                 Aktionsblase.configure(text = '"Das Legendäre Pokemon:\n M......"\nder rest ist verkratzt..')
                 Map_Hit = True
             elif Map_Hit == True:
                 pass
+
+    elif Ash_Pos == 'Ash_Haus_Wohnzimmer':
+        pass
+
+    else:
+        pass
                 
-            
-
-        
-
-    fenster.bind('<Key-k>', Aktion)
-    fenster.bind('<Key-K>', Aktion)
+fenster.bind('<Key-k>', Aktion)
+fenster.bind('<Key-K>', Aktion)
 
 def Maus_Pos(event):
     global ingame_fenster
