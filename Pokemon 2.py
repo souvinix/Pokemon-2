@@ -68,6 +68,7 @@ elif Ash_Transparent == True:
 
 ingame_map = PhotoImage(file = pfad+'Anfangsraum.gif')
 ash_haus_wohnzimmer = PhotoImage(file = pfad+'AshHausWohnzimmer.gif')
+ash_haus_küche = PhotoImage(file = pfad+'Ash_Haus_Küche2.png')
 
 ############################
 
@@ -294,6 +295,10 @@ def Ingame():
             elif(Map_y < 174):
                 Map_y += Geschwindigkeit
 
+            #Zur Küche (Funktion)
+            if(Map_x > 580 and Map_x < 590 and Map_y > 370 and Map_y < 400):
+                Ingame3()
+
                 #Bücherregal
             if(Map_x > 505 and Map_x < 515 and Map_y > 170 and Map_y < 220):
                 Map_x -= Geschwindigkeit
@@ -323,7 +328,7 @@ def Ingame():
                 #Fernseher UND Konsole
             if(Map_x > 349 and Map_x < 360 and Map_y > 170 and Map_y < 210):
                 Map_x -= Geschwindigkeit
-            elif(Map_x > 350 and Map_x < 490 and Map_y > 215 and Map_y < 225):
+            if(Map_x > 350 and Map_x < 490 and Map_y > 205 and Map_y < 225):
                 Map_y += Geschwindigkeit
             elif(Map_x > 480 and Map_x < 495 and Map_y > 170 and Map_y < 210):
                 Map_x += Geschwindigkeit
@@ -341,6 +346,17 @@ def Ingame():
                     #Von oben
             elif(Map_x > 345 and Map_x < 415 and Map_y > 280 and Map_y < 290):
                 Map_y -= Geschwindigkeit
+
+                #Pokemon (neben der Mutter auf einem Stuhl)
+                    #Von oben
+            if(Map_x > 415 and Map_x < 455 and Map_y > 300 and Map_y < 330):
+                Map_y -= Geschwindigkeit
+                    #Von rechts
+            elif(Map_x > 450 and Map_x < 457 and Map_y > 335 and Map_y < 345):
+                Map_x += Geschwindigkeit
+                    #Von unten
+            elif(Map_x > 415 and Map_x < 455 and Map_y > 350 and Map_y < 370):
+                Map_y += Geschwindigkeit
                 
     
     
@@ -501,7 +517,14 @@ def Ingame():
         Map_y = 210
         AshDirection = 'Left'
 
-        Ingame_map.itemconfig('Map', image = ash_haus_wohnzimmer, tags = 'New_Map')
+        Ingame_map.itemconfig('Map', image = ash_haus_wohnzimmer, tags = 'Ash.Haus.Wohnzimmer')
+
+    def Ingame3():
+        global Ingame_map, Alle_Objekte, Map_x, Map_y, AshDirection, Geschwindigkeit, Ash_Pos
+        Ash_Pos = 'Ash_Haus_Küche'
+        time.sleep(0.5)
+        Ingame_map.itemconfig('Ash.Haus.Wohnzimmer', image = ash_haus_küche, tags = 'Küche')
+        
         
         
     Map_Hit = False
