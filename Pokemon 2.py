@@ -100,6 +100,16 @@ Buch = False
 Pikachu = False
 Uhr = False
 Pumelluff = False
+Fernseher = False
+Wii = False
+Mutter = False
+Pokemon_Mutter = False
+Schwester = False
+Pokemon_Schwester = False
+Bücherregal_Secret = False
+Bücherregal = False
+Blume = False
+Blume_Item = False
 
 ############################
 
@@ -142,7 +152,9 @@ def Ingame():
 
     def Alle_Objekte():
         global Map_x, Map_y, AshDirection, Pikachu, Buch, Uhr, Pumelluff, Aktionsblase, Map_Hit
-
+        global Fernseher, Wii, Mutter, Pokemon_Mutter, Schwester, Pokemon_Schwester, Bücherregal, Bücherregal_Secret
+        global Blume
+        
         if Ash_Pos == 'Ash_Haus_Zimmer':
             #Bett
             if (Map_x < 300 and Map_y < 280 and Map_x < Map_y):
@@ -305,6 +317,30 @@ def Ingame():
             elif(Map_x > 517 and Map_x < 590 and Map_y > 210 and Map_y < 220):
                 Map_y += Geschwindigkeit
 
+                #Bücherregal_Secret(Objekt)
+            if(Map_x > 504 and Map_x < 515 and Map_y > 165 and Map_y < 220):
+                if(AshDirection == 'Right'):
+                    Bücherregal_Secret = True
+                if(Bücherregal_Secret == True and AshDirection != 'Right'):
+                    Bücherregal_Secret = False
+                    Map_Hit = False
+                    try:
+                        Aktionsblase.destroy()
+                    except:
+                        pass
+
+                #Bücherregal(Objekt)
+            if(Map_x > 537 and Map_x < 585 and Map_y > 215 and Map_y < 225):
+                if(AshDirection == 'Up'):
+                    Bücherregal = True
+                if(Bücherregal == True and AshDirection != 'Up'):
+                    Bücherregal = False
+                    Map_Hit = False
+                    try:
+                        Aktionsblase.destroy()
+                    except:
+                        pass
+
                 #Holztisch
             if(Map_x > 520 and Map_x < 590 and Map_y > 240 and Map_y < 255):
                 Map_y -= Geschwindigkeit
@@ -312,6 +348,30 @@ def Ingame():
                 Map_x -= Geschwindigkeit
             elif(Map_x > 520 and Map_x < 590 and Map_y > 325 and Map_y < 335):
                 Map_y += Geschwindigkeit
+
+                #Blume, links(Objekt)
+            if(Map_x > 505 and Map_x < 520 and Map_y > 270 and Map_y < 280):
+                if(AshDirection == 'Right'):
+                    Blume = True
+                if(Bücherregal == True and AshDirection != 'Right'):
+                    Blume = False
+                    Map_Hit = False
+                    try:
+                        Aktionsblase.destroy()
+                    except:
+                        pass
+                    
+                #Blume, oben(Objekt)
+            elif(Map_x > 520 and Map_x < 545 and Map_y > 235 and Map_y < 250):
+                if(AshDirection == 'Down'):
+                    Blume = True
+                if(Bücherregal == True and AshDirection != 'Down'):
+                    Blume = False
+                    Map_Hit = False
+                    try:
+                        Aktionsblase.destroy()
+                    except:
+                        pass
 
                 #Treppe
             if(Map_x > 280 and Map_x < 290 and Map_y > 170 and Map_y < 255):
@@ -332,6 +392,29 @@ def Ingame():
                 Map_y += Geschwindigkeit
             elif(Map_x > 480 and Map_x < 495 and Map_y > 170 and Map_y < 210):
                 Map_x += Geschwindigkeit
+
+                #Fernseher(Objekt)
+            if(Map_x > 375 and Map_x < 425 and Map_y > 220 and Map_y < 230):
+                if(AshDirection == 'Up'):
+                    Fernseher = True
+                if(Fernseher == True and AshDirection != 'Up'):
+                    Fernseher = False
+                    Map_Hit = False
+                    try:
+                        Aktionsblase.destroy()
+                    except:
+                        pass
+                #Wii (Objekt)
+            elif(Map_x > 435 and Map_x < 480 and Map_y > 220 and Map_y < 230):
+                if(AshDirection == 'Up'):
+                    Wii = True
+                if(Wii == True and AshDirection != 'Up'):
+                    Wii = False
+                    Map_Hit = False
+                    try:
+                        Aktionsblase.destroy()
+                    except:
+                        pass
 
                 #Mutter (Sitzt auf einem Stuhl)
                     #Von links
@@ -529,7 +612,7 @@ def Ingame():
         
     Map_Hit = False
 def Aktion(event):
-    global AshDirection, Pikachu, Aktionsblase, Map_x, Map_y, Map_Hit, Pumelluff, Uhr, Buch
+    global AshDirection, Pikachu, Aktionsblase, Map_x, Map_y, Map_Hit
 
     #Ash's Zimmer
     if Ash_Pos == 'Ash_Haus_Zimmer':
@@ -573,9 +656,70 @@ def Aktion(event):
             elif Map_Hit == True:
                 pass
 
-    elif Ash_Pos == 'Ash_Haus_Wohnzimmer':
-        pass
+    if Ash_Pos == 'Ash_Haus_Wohnzimmer':
+        if(Fernseher == True):
+            if Map_Hit == False:
+                Aktionsblase = Label(fenster, image = aktionsblase,
+                                compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                Aktionsblase.place(x = 175, y = 475)
+                Aktionsblase.configure(text = '*Ein Rauschbild*...\nder Fernseher funktioniert\nnicht richtig..')
+                Map_Hit = True
+            elif Map_Hit == True:
+                pass
 
+        elif(Wii == True):
+            if Map_Hit == False:
+                Aktionsblase = Label(fenster, image = aktionsblase,
+                                compound = 'center', font = ('Terminator Two', 15), fg = 'black', bg = 'black', bd = 0)
+                Aktionsblase.place(x = 175, y = 475)
+                Aktionsblase.configure(text = 'Krrrrrr!!!...')
+                Map_Hit = True
+            elif Map_Hit == True:
+                pass
+
+        elif(Bücherregal_Secret == True):
+            if Map_Hit == False:
+                Aktionsblase = Label(fenster, image = aktionsblase,
+                                compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                Aktionsblase.place(x = 175, y = 475)
+                Aktionsblase.configure(text = 'Hier wurde etwas reingeritzt...\nfinde heraus wer es war!')
+                Map_Hit = True
+            elif Map_Hit == True:
+                pass
+
+        elif(Bücherregal == True):
+            if Map_Hit == False:
+                Aktionsblase = Label(fenster, image = aktionsblase,
+                                compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                Aktionsblase.place(x = 175, y = 475)
+                Aktionsblase.configure(text = 'Viele alte Bücher...\n-Ich finde man sollte\nsie wegwerfen-')
+                Map_Hit = True
+            elif Map_Hit == True:
+                pass
+
+        elif(Blume == True):
+            if Blume_Item == False:
+                if Map_Hit == False:
+                        Aktionsblase = Label(fenster, image = aktionsblase,
+                                        compound = 'center', font = ('Terminator Two', 15), fg = 'black', bg = 'black', bd = 0)
+                        Aktionsblase.place(x = 175, y = 475)
+                        Aktionsblase.configure(text = '*Du hast Wasser gefunden*')
+                        Map_Hit = True
+                elif Map_Hit == True:
+                        pass
+            elif Blume_Item == True:
+                if Map_Hit == False:
+                        Aktionsblase = Label(fenster, image = aktionsblase,
+                                        compound = 'center', font = ('Terminator Two', 15), fg = 'black', bg = 'black', bd = 0)
+                        Aktionsblase.place(x = 175, y = 475)
+                        Aktionsblase.configure(text = 'Die Blumen sind frisch.')
+                        Map_Hit = True
+                elif Map_Hit == True:
+                        pass
+                
+
+
+            
     else:
         pass
                 
