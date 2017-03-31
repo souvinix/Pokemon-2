@@ -33,7 +33,7 @@ bg_for_pokechoice = PhotoImage(file = pfad+'bg_for_pokechoice.gif')
 schiggy_button = PhotoImage(file = pfad+'Schiggy_Button.gif')
 glumanda_button = PhotoImage(file = pfad+'Glumanda_Button.gif')
 bisasam_button = PhotoImage(file = pfad+'Bisasam_Button.gif')
-aktionsblase = PhotoImage(file = pfad+'Aktionsblase.gif')
+aktionsblase = PhotoImage(file = pfad+'Aktionsblase.png')
 
 if Ash_Transparent == False:
 
@@ -72,6 +72,8 @@ ash_haus_küche = PhotoImage(file = pfad+'Ash_Haus_Küche2.png')
 
 ############################
 
+Wasser = 0
+Meine_Items = []
 Meine_Pokemons = []
 spielen = False
 Geschlecht = ''
@@ -153,7 +155,7 @@ def Ingame():
     def Alle_Objekte():
         global Map_x, Map_y, AshDirection, Pikachu, Buch, Uhr, Pumelluff, Aktionsblase, Map_Hit
         global Fernseher, Wii, Mutter, Pokemon_Mutter, Schwester, Pokemon_Schwester, Bücherregal, Bücherregal_Secret
-        global Blume
+        global Blume, Blume_Item
         
         if Ash_Pos == 'Ash_Haus_Zimmer':
             #Bett
@@ -350,10 +352,10 @@ def Ingame():
                 Map_y += Geschwindigkeit
 
                 #Blume, links(Objekt)
-            if(Map_x > 505 and Map_x < 520 and Map_y > 270 and Map_y < 280):
+            if(Map_x > 505 and Map_x < 520 and Map_y > 270 and Map_y < 300):
                 if(AshDirection == 'Right'):
                     Blume = True
-                if(Bücherregal == True and AshDirection != 'Right'):
+                if(Blume == True and AshDirection != 'Right'):
                     Blume = False
                     Map_Hit = False
                     try:
@@ -362,10 +364,10 @@ def Ingame():
                         pass
                     
                 #Blume, oben(Objekt)
-            elif(Map_x > 520 and Map_x < 545 and Map_y > 235 and Map_y < 250):
+            elif(Map_x > 520 and Map_x < 560 and Map_y > 235 and Map_y < 250):
                 if(AshDirection == 'Down'):
                     Blume = True
-                if(Bücherregal == True and AshDirection != 'Down'):
+                if(Blume == True and AshDirection != 'Down'):
                     Blume = False
                     Map_Hit = False
                     try:
@@ -585,7 +587,7 @@ def Ingame():
 
     aktionslabel = Label(ingame_fenster, text = 'Aktion(K)', font = ('Terminator Two', 15))
     aktionslabel.configure(bg = 'light blue', fg = 'dark blue')
-    aktionslabel.place(x = 550, y = 560)
+    aktionslabel.place(x = 675, y = 560)
 
     ingame_fenster.bind('<Key-o>', Pos)
     ingame_fenster.bind('<Key-O>', Pos)
@@ -612,7 +614,7 @@ def Ingame():
         
     Map_Hit = False
 def Aktion(event):
-    global AshDirection, Pikachu, Aktionsblase, Map_x, Map_y, Map_Hit
+    global AshDirection, Pikachu, Aktionsblase, Map_x, Map_y, Map_Hit, Blume_Item
 
     #Ash's Zimmer
     if Ash_Pos == 'Ash_Haus_Zimmer':
@@ -701,12 +703,15 @@ def Aktion(event):
             if Blume_Item == False:
                 if Map_Hit == False:
                         Aktionsblase = Label(fenster, image = aktionsblase,
-                                        compound = 'center', font = ('Terminator Two', 15), fg = 'black', bg = 'black', bd = 0)
+                                        compound = 'center', font = ('Terminator Two', 15), fg = 'blue', bg = 'black', bd = 0)
                         Aktionsblase.place(x = 175, y = 475)
                         Aktionsblase.configure(text = '*Du hast Wasser gefunden*')
+                        Wasser += 1
                         Map_Hit = True
+                        Blume_Item = True
                 elif Map_Hit == True:
                         pass
+                    
             elif Blume_Item == True:
                 if Map_Hit == False:
                         Aktionsblase = Label(fenster, image = aktionsblase,
@@ -722,9 +727,15 @@ def Aktion(event):
             
     else:
         pass
+
+
+def Pause(event):
+    pass
                 
 fenster.bind('<Key-k>', Aktion)
 fenster.bind('<Key-K>', Aktion)
+fenster.bind('<Key-Escape>', Pause)
+
 
 def Maus_Pos(event):
     global ingame_fenster
