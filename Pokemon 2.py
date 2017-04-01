@@ -5,8 +5,6 @@ from tkinter import ttk
 import time
 import random
 
-Ash_Transparent = True
-
 fenster = Tk()
 fenster.title('The Elder Scrolls 6: Pokemon')
 fenster.geometry('800x600')
@@ -35,36 +33,19 @@ glumanda_button = PhotoImage(file = pfad+'Glumanda_Button.gif')
 bisasam_button = PhotoImage(file = pfad+'Bisasam_Button.gif')
 aktionsblase = PhotoImage(file = pfad+'Aktionsblase.png')
 
-if Ash_Transparent == False:
-
-    Nach_Links_stehen = PhotoImage(file = pfad+'Von_links_stehen.gif')
-    Nach_Links_schritt1 = PhotoImage(file = pfad+'Von_links_schritt1.gif')
-    Nach_Links_schritt2 = PhotoImage(file = pfad+'Von_links_schritt2.gif')
-    Nach_Rechts_stehen = PhotoImage(file = pfad+'Von_rechts_stehen.gif')
-    Nach_Rechts_schritt1 = PhotoImage(file = pfad+'Von_rechts_schritt1.gif')
-    Nach_Rechts_schritt2 = PhotoImage(file = pfad+'Von_rechts_schritt2.gif')
-    Nach_Unten_stehen = PhotoImage(file = pfad+'Von_vorne_stehen.gif')
-    Nach_Unten_schritt1 = PhotoImage(file = pfad+'Von_vorne_schritt1.gif')
-    Nach_Unten_schritt2 = PhotoImage(file = pfad+'Von_vorne_schritt2.gif')
-    Nach_Oben_stehen = PhotoImage(file = pfad+'Von_hinten_stehen.gif')
-    Nach_Oben_schritt1 = PhotoImage(file = pfad+'Von_hinten_schritt1.gif')
-    Nach_Oben_schritt2 = PhotoImage(file = pfad+'Von_hinten_schritt2.gif')
-
-elif Ash_Transparent == True:
-
-    pfad2 = 'Ash_Transparent/'
-    Nach_Links_stehen = PhotoImage(file = pfad2+'Von_links_stehen.png')
-    Nach_Links_schritt1 = PhotoImage(file = pfad2+'Von_links_schritt1.png')
-    Nach_Links_schritt2 = PhotoImage(file = pfad2+'Von_links_schritt2.png')
-    Nach_Rechts_stehen = PhotoImage(file = pfad2+'Von_rechts_stehen.png')
-    Nach_Rechts_schritt1 = PhotoImage(file = pfad2+'Von_rechts_schritt1.png')
-    Nach_Rechts_schritt2 = PhotoImage(file = pfad2+'Von_rechts_schritt2.png')
-    Nach_Unten_stehen = PhotoImage(file = pfad2+'Von_vorne_stehen.png')
-    Nach_Unten_schritt1 = PhotoImage(file = pfad2+'Von_vorne_schritt1.png')
-    Nach_Unten_schritt2 = PhotoImage(file = pfad2+'Von_vorne_schritt2.png')
-    Nach_Oben_stehen = PhotoImage(file = pfad2+'Von_hinten_stehen.png')
-    Nach_Oben_schritt1 = PhotoImage(file = pfad2+'Von_hinten_schritt1.png')
-    Nach_Oben_schritt2 = PhotoImage(file = pfad2+'Von_hinten_schritt2.png')
+pfad2 = 'Ash_Transparent/'
+Nach_Links_stehen = PhotoImage(file = pfad2+'Von_links_stehen.png')
+Nach_Links_schritt1 = PhotoImage(file = pfad2+'Von_links_schritt1.png')
+Nach_Links_schritt2 = PhotoImage(file = pfad2+'Von_links_schritt2.png')
+Nach_Rechts_stehen = PhotoImage(file = pfad2+'Von_rechts_stehen.png')
+Nach_Rechts_schritt1 = PhotoImage(file = pfad2+'Von_rechts_schritt1.png')
+Nach_Rechts_schritt2 = PhotoImage(file = pfad2+'Von_rechts_schritt2.png')
+Nach_Unten_stehen = PhotoImage(file = pfad2+'Von_vorne_stehen.png')
+Nach_Unten_schritt1 = PhotoImage(file = pfad2+'Von_vorne_schritt1.png')
+Nach_Unten_schritt2 = PhotoImage(file = pfad2+'Von_vorne_schritt2.png')
+Nach_Oben_stehen = PhotoImage(file = pfad2+'Von_hinten_stehen.png')
+Nach_Oben_schritt1 = PhotoImage(file = pfad2+'Von_hinten_schritt1.png')
+Nach_Oben_schritt2 = PhotoImage(file = pfad2+'Von_hinten_schritt2.png')
 
 ingame_map = PhotoImage(file = pfad+'Anfangsraum.gif')
 ash_haus_wohnzimmer = PhotoImage(file = pfad+'AshHausWohnzimmer.gif')
@@ -73,7 +54,6 @@ ash_haus_küche = PhotoImage(file = pfad+'Ash_Haus_Küche2.png')
 ############################
 
 Wasser = 0
-Meine_Items = []
 Meine_Pokemons = []
 spielen = False
 Geschlecht = ''
@@ -82,6 +62,9 @@ Pokebälle = 0
 Mein_Max_Leben = 100
 Mein_Aktuelles_Leben = 100
 sprinten = False
+Alle_Items = []
+name = 'Noah'
+Mission = []
 
 ############################
 #########Meine Räume########
@@ -98,13 +81,16 @@ sprinten = False
 ########Meine Objekte#######
 ############################
 
+beginn = True
 Buch = False
 Pikachu = False
 Uhr = False
 Pumelluff = False
 Fernseher = False
 Wii = False
-Mutter = False
+Mutter_unten = False
+Mutter_links = False
+Mutter_oben = False
 Pokemon_Mutter = False
 Schwester = False
 Pokemon_Schwester = False
@@ -121,7 +107,9 @@ def Ingame_Escape(event):
 def Ingame():
     global timerRIGHT, timerLEFT, timerDOWN, timerUP
     global Map_x, Map_y, Geschwindigkeit, Ingame_map, Ash_Pos, Map_Hit
-    global ingame_fenster, Alle_Objekte, Ash, Pikachu, Buch, Uhr, Pumelluff, Aktionsblase
+    global ingame_fenster, Alle_Objekte, Ash, Pikachu, Buch, Uhr, Pumelluff, Aktionsblase, beginn
+
+    time.sleep(0.5)
     
     Ash_Pos = 'Ash_Haus_Zimmer'
     try:
@@ -136,8 +124,12 @@ def Ingame():
     ingame_fenster.resizable(0,0)
 
 ################################
-    Map_x = 369
-    Map_y = 250
+    if beginn == True:
+        Map_x = 369
+        Map_y = 250
+    elif beginn == False:
+        Map_x = 500
+        Map_y = 230
     Geschwindigkeit = 4
 ################################
 
@@ -150,583 +142,777 @@ def Ingame():
     timerLEFT = 0
     timerRIGHT = 0
 
-    AshDirection = 'Down'
-
-    def Alle_Objekte():
-        global Map_x, Map_y, AshDirection, Pikachu, Buch, Uhr, Pumelluff, Aktionsblase, Map_Hit
-        global Fernseher, Wii, Mutter, Pokemon_Mutter, Schwester, Pokemon_Schwester, Bücherregal, Bücherregal_Secret
-        global Blume, Blume_Item
-        
-        if Ash_Pos == 'Ash_Haus_Zimmer':
-            #Bett
-            if (Map_x < 300 and Map_y < 280 and Map_x < Map_y):
-                Map_y += Geschwindigkeit
-            elif (Map_x < 315 and Map_y < 280 and Map_x > 310):
-                Map_x += Geschwindigkeit
-                
-            #Bett Pikachu(Objekt)
-            if (Map_x < 320 and Map_y < 250):
-                if(AshDirection == 'Left'):
-                    Pikachu = True
-                if(Pikachu == True and AshDirection != 'Left'):
-                    Pikachu = False
-                    Map_Hit = False
-                    try:
-                        Aktionsblase.destroy()
-                    except:
-                        pass
-                    
-            #Treppe
-            if (Map_x > 510 and Map_y < 285 and Map_x < 515):
-                Map_x -= Geschwindigkeit
-            elif (Map_x > 510 and Map_y < 285 and Map_x > 515):
-                Map_y += Geschwindigkeit
-            #Treppe(Funktion)
-            if(Map_x > 505 and Map_y < 260):
-                Ingame_2()
-
-            #Pflanze
-            if (Map_x > 535 and Map_y > 400):
-                Map_x -= Geschwindigkeit
-            elif (Map_x > 550 and Map_y > 390 and not Map_y > 420):
-                Map_y -= Geschwindigkeit
-
-            #Glastisch
-                #Vorbeigehen können
-            if (Map_x > 385 and Map_y > 405):
-                if(Map_x > 385 and Map_y > 400 and Map_x < 480 and Map_y <= 412):
-                    Map_y += Geschwindigkeit
-            
-            elif (Map_x > 475 and Map_y > 330):
-                if(Map_x < 490 and Map_y < 405):
-                    Map_x += Geschwindigkeit
-
-                #Obere und linke Seite
-            if(Map_x > 380 and Map_y > 330 and Map_x < 390 and Map_y < 405):
-                Map_x -= Geschwindigkeit
-            elif(Map_x > 395 and Map_y > 305 and Map_x < 480 and Map_y < 325):
-                Map_y -= Geschwindigkeit
-
-
-                #Buch, von oben (Objekt)
-            if(Map_x > 440 and Map_x < 465 and Map_y > 300 and Map_y < 310):
-                if(AshDirection == 'Down'):
-                    Buch = True
-                if(Buch == True and AshDirection != 'Down'):
-                    Buch = False
-                    Map_Hit = False
-                    try:
-                        Aktionsblase.destroy()
-                    except:
-                        pass
-
-                #Buch, von rechts (Objekt)
-            elif(Map_x > 485 and Map_x < 495 and Map_y > 330 and Map_y < 360):
-                if(AshDirection == 'Left'):
-                    Buch = True
-                if(Buch == True and AshDirection != 'Left'):
-                    Buch = False
-                    Map_Hit = False
-                    try:
-                        Aktionsblase.destroy()
-                    except:
-                        pass
-
-                
-
-            #Couch
-                #Vorbeigehen können
-            if (Map_x > 305 and Map_y > 410):
-                if(Map_x > 300 and Map_y > 410 and Map_x < 365 and Map_y <= 415):
-                    Map_y += Geschwindigkeit
-                    
-            elif (Map_x > 365 and Map_y > 340):
-                if(Map_x < 377 and Map_y < 405):
-                    Map_x += Geschwindigkeit
-
-                #Obere und linke Seite
-            if(Map_x > 300 and Map_y > 320 and Map_x < 310 and Map_y < 400):
-                Map_x -= Geschwindigkeit
-                
-            elif(Map_x > 305 and Map_y > 310 and Map_x < 350 and Map_y < 330):
-                Map_y -= Geschwindigkeit
-
-                
-
-                #Couch Pumelluff(Objekt)
-            if(Map_x > 365 and Map_y > 350 and Map_x < 380 and Map_y < 380):
-                if(AshDirection == 'Left'):
-                    Pumelluff = True
-                if(Pumelluff == True and AshDirection != 'Left'):
-                    Pumelluff = False
-                    Map_Hit = False
-                    try:
-                        Aktionsblase.destroy()
-                    except:
-                        pass
-                
-
-            #Rand
-                #OBEN
-            if(Map_y < 215):
-                Map_y += Geschwindigkeit
-                #Rand oben, Uhr (Objekt)
-            if(Map_x > 440 and Map_y < 225 and Map_x < 465):
-                if(AshDirection == 'Up'):
-                    Uhr = True
-                if(Uhr == True and AshDirection != 'Up'):
-                    Uhr = False
-                    Map_Hit = False
-                    try:
-                        Aktionsblase.destroy()
-                    except:
-                        pass
-
-            
-                #UNTEN
-            if(Map_y > 460): 
-                Map_y -= Geschwindigkeit
-                #LINKS
-            if (Map_x < 215): 
-                Map_x += Geschwindigkeit
-                #RECHTS
-            if(Map_x > 580):
-                Map_x -= Geschwindigkeit
-
-        elif Ash_Pos == 'Ash_Haus_Wohnzimmer':
-            
-                 #Rand
-            #Linke Wand
-            if(Map_x < 220):
-                Map_x += Geschwindigkeit
-            #Untere Wand
-            elif(Map_y > 470):
-                Map_y -= Geschwindigkeit
-            #Rechte Wand
-            elif(Map_x > 585):
-                Map_x -= Geschwindigkeit
-            #Obere Wand
-            elif(Map_y < 174):
-                Map_y += Geschwindigkeit
-
-            #Zur Küche (Funktion)
-            if(Map_x > 580 and Map_x < 590 and Map_y > 370 and Map_y < 400):
-                Ingame3()
-
-                #Bücherregal
-            if(Map_x > 505 and Map_x < 515 and Map_y > 170 and Map_y < 220):
-                Map_x -= Geschwindigkeit
-            elif(Map_x > 517 and Map_x < 590 and Map_y > 210 and Map_y < 220):
-                Map_y += Geschwindigkeit
-
-                #Bücherregal_Secret(Objekt)
-            if(Map_x > 504 and Map_x < 515 and Map_y > 165 and Map_y < 220):
-                if(AshDirection == 'Right'):
-                    Bücherregal_Secret = True
-                if(Bücherregal_Secret == True and AshDirection != 'Right'):
-                    Bücherregal_Secret = False
-                    Map_Hit = False
-                    try:
-                        Aktionsblase.destroy()
-                    except:
-                        pass
-
-                #Bücherregal(Objekt)
-            if(Map_x > 537 and Map_x < 585 and Map_y > 215 and Map_y < 225):
-                if(AshDirection == 'Up'):
-                    Bücherregal = True
-                if(Bücherregal == True and AshDirection != 'Up'):
-                    Bücherregal = False
-                    Map_Hit = False
-                    try:
-                        Aktionsblase.destroy()
-                    except:
-                        pass
-
-                #Holztisch
-            if(Map_x > 520 and Map_x < 590 and Map_y > 240 and Map_y < 255):
-                Map_y -= Geschwindigkeit
-            elif(Map_x > 510 and Map_x < 520 and Map_y > 255 and Map_y < 320):
-                Map_x -= Geschwindigkeit
-            elif(Map_x > 520 and Map_x < 590 and Map_y > 325 and Map_y < 335):
-                Map_y += Geschwindigkeit
-
-                #Blume, links(Objekt)
-            if(Map_x > 505 and Map_x < 520 and Map_y > 270 and Map_y < 300):
-                if(AshDirection == 'Right'):
-                    Blume = True
-                if(Blume == True and AshDirection != 'Right'):
-                    Blume = False
-                    Map_Hit = False
-                    try:
-                        Aktionsblase.destroy()
-                    except:
-                        pass
-                    
-                #Blume, oben(Objekt)
-            elif(Map_x > 520 and Map_x < 560 and Map_y > 235 and Map_y < 250):
-                if(AshDirection == 'Down'):
-                    Blume = True
-                if(Blume == True and AshDirection != 'Down'):
-                    Blume = False
-                    Map_Hit = False
-                    try:
-                        Aktionsblase.destroy()
-                    except:
-                        pass
-
-                #Treppe
-            if(Map_x > 280 and Map_x < 290 and Map_y > 170 and Map_y < 255):
-                Map_x += Geschwindigkeit
-            elif(Map_x > 220 and Map_x < 270 and Map_y > 250 and Map_y < 265):
-                Map_y += Geschwindigkeit
-
-                #Pflanze
-            if(Map_x > 220 and Map_x < 260 and Map_y > 265 and Map_y < 295):
-                Map_x += Geschwindigkeit
-            elif(Map_x > 220 and Map_x < 250 and Map_y > 295 and Map_y < 310):
-                Map_y += Geschwindigkeit
-
-                #Fernseher UND Konsole
-            if(Map_x > 349 and Map_x < 360 and Map_y > 170 and Map_y < 210):
-                Map_x -= Geschwindigkeit
-            if(Map_x > 350 and Map_x < 490 and Map_y > 205 and Map_y < 225):
-                Map_y += Geschwindigkeit
-            elif(Map_x > 480 and Map_x < 495 and Map_y > 170 and Map_y < 210):
-                Map_x += Geschwindigkeit
-
-                #Fernseher(Objekt)
-            if(Map_x > 375 and Map_x < 425 and Map_y > 220 and Map_y < 230):
-                if(AshDirection == 'Up'):
-                    Fernseher = True
-                if(Fernseher == True and AshDirection != 'Up'):
-                    Fernseher = False
-                    Map_Hit = False
-                    try:
-                        Aktionsblase.destroy()
-                    except:
-                        pass
-                #Wii (Objekt)
-            elif(Map_x > 435 and Map_x < 480 and Map_y > 220 and Map_y < 230):
-                if(AshDirection == 'Up'):
-                    Wii = True
-                if(Wii == True and AshDirection != 'Up'):
-                    Wii = False
-                    Map_Hit = False
-                    try:
-                        Aktionsblase.destroy()
-                    except:
-                        pass
-
-                #Mutter (Sitzt auf einem Stuhl)
-                    #Von links
-            if (Map_x > 340 and Map_x < 347 and Map_y > 285 and Map_y < 370):
-                Map_x -= Geschwindigkeit
-                    #Von unten
-            elif(Map_x > 345 and Map_x < 415 and Map_y > 360 and Map_y < 375):
-                Map_y += Geschwindigkeit
-                    #Von rechts
-            elif(Map_x > 405 and Map_x < 415 and Map_y > 285 and Map_y < 370):
-                Map_x += Geschwindigkeit
-                    #Von oben
-            elif(Map_x > 345 and Map_x < 415 and Map_y > 280 and Map_y < 290):
-                Map_y -= Geschwindigkeit
-
-                #Pokemon (neben der Mutter auf einem Stuhl)
-                    #Von oben
-            if(Map_x > 415 and Map_x < 455 and Map_y > 300 and Map_y < 330):
-                Map_y -= Geschwindigkeit
-                    #Von rechts
-            elif(Map_x > 450 and Map_x < 457 and Map_y > 335 and Map_y < 345):
-                Map_x += Geschwindigkeit
-                    #Von unten
-            elif(Map_x > 415 and Map_x < 455 and Map_y > 350 and Map_y < 370):
-                Map_y += Geschwindigkeit
-                
-    
-    
-    def Key_Up(event):
-        global Map_x, Map_y, timerUP, AshDirection, Ingame_map, timerDOWN, timerLEFT, timerRIGHT
-        timerUP += 1
-        timerLEFT = 0
-        timerDOWN = 0
-        timerRIGHT = 0
-
-        AshDirection = 'Up'
-        
-        if (timerUP >= Schrittgeschwindigkeit1):
-            Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Oben_schritt1, tags = 'Ash')
-        if (timerUP >= Schrittgeschwindigkeit2):
-            Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Oben_stehen, tags = 'Ash')
-        if (timerUP >= Schrittgeschwindigkeit3):
-            Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Oben_schritt2, tags = 'Ash')
-        if (timerUP >= Schrittgeschwindigkeit4):
-            Ingame_map.delete("Ash")
-            timerUP = 0
-        if(timerUP == 0):
-            Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Oben_stehen, tags = 'Ash')
-
-        Alle_Objekte()
-        
-        Map_y -= Geschwindigkeit
-        
-    def Key_Down(event):
-        global Map_x, Map_y, timerDOWN, AshDirection, Ingame_map, timerLEFT, timerRIGHT, timerUP
-
+    if beginn == True:
         AshDirection = 'Down'
-
-        timerDOWN += 1
-        timerUP = 0
-        timerLEFT = 0
-        timerRIGHT = 0
-
-        if (timerDOWN >= Schrittgeschwindigkeit1):
-            Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Unten_schritt1, tags = 'Ash')
-        if (timerDOWN >= Schrittgeschwindigkeit2):
-            Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Unten_stehen, tags = 'Ash')
-        if (timerDOWN >= Schrittgeschwindigkeit3):
-            Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Unten_schritt2, tags = 'Ash')
-        if (timerDOWN >= Schrittgeschwindigkeit4):
-            Ingame_map.delete("Ash")
-            timerDOWN = 0
-        if(timerDOWN == 0):
-            Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Unten_stehen, tags = 'Ash')
-
-        Alle_Objekte()
-
-        Map_y += Geschwindigkeit
-      
-    def Key_Left(event):
-        global Map_x, Map_y, timerLEFT, AshDirection, Ingame_map, timerRIGHT, timerUP, timerDOWN
-
+    elif beginn == False:
         AshDirection = 'Left'
 
-        timerDOWN = 0
-        timerUP = 0
-        timerRIGHT = 0
-        timerLEFT += 1
+    if beginn == True:
+        def Alle_Objekte():
+            global Map_x, Map_y, AshDirection, Pikachu, Buch, Uhr, Pumelluff, Aktionsblase, Map_Hit
+            global Fernseher, Wii, Mutter, Pokemon_Mutter, Schwester, Pokemon_Schwester, Bücherregal, Bücherregal_Secret
+            global Blume, Blume_Item, Wasser, Alle_Items, Mutter_oben, Mutter_links, Mutter_unten, Ja, Nein
+            
+            if Ash_Pos == 'Ash_Haus_Zimmer':
+                #Bett
+                if (Map_x < 300 and Map_y < 280 and Map_x < Map_y):
+                    Map_y += Geschwindigkeit
+                elif (Map_x < 315 and Map_y < 280 and Map_x > 310):
+                    Map_x += Geschwindigkeit
+                    
+                #Bett Pikachu(Objekt)
+                if (Map_x < 320 and Map_y < 250):
+                    if(AshDirection == 'Left'):
+                        Pikachu = True
+                    if(Pikachu == True and AshDirection != 'Left'):
+                        Pikachu = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+                        
+                #Treppe
+                if (Map_x > 510 and Map_y < 285 and Map_x < 515):
+                    Map_x -= Geschwindigkeit
+                elif (Map_x > 510 and Map_y < 285 and Map_x > 515):
+                    Map_y += Geschwindigkeit
+                #Treppe(Funktion)
+                if(Map_x > 505 and Map_y < 260):
+                    Ingame_2()
 
-        if (timerLEFT >= Schrittgeschwindigkeit1):
-            Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Links_schritt1, tags = 'Ash')
-        if (timerLEFT >= Schrittgeschwindigkeit2):
-            Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Links_stehen, tags = 'Ash')
-        if (timerLEFT >= Schrittgeschwindigkeit3):
-            Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Links_schritt2, tags = 'Ash')
-        if (timerLEFT >= Schrittgeschwindigkeit4):
-            Ingame_map.delete("Ash")
+                #Pflanze
+                if (Map_x > 535 and Map_y > 400):
+                    Map_x -= Geschwindigkeit
+                elif (Map_x > 550 and Map_y > 390 and not Map_y > 420):
+                    Map_y -= Geschwindigkeit
+
+                #Glastisch
+                    #Vorbeigehen können
+                if (Map_x > 385 and Map_y > 405):
+                    if(Map_x > 385 and Map_y > 400 and Map_x < 480 and Map_y <= 412):
+                        Map_y += Geschwindigkeit
+                
+                elif (Map_x > 475 and Map_y > 330):
+                    if(Map_x < 490 and Map_y < 405):
+                        Map_x += Geschwindigkeit
+
+                    #Obere und linke Seite
+                if(Map_x > 380 and Map_y > 330 and Map_x < 390 and Map_y < 405):
+                    Map_x -= Geschwindigkeit
+                elif(Map_x > 395 and Map_y > 305 and Map_x < 480 and Map_y < 325):
+                    Map_y -= Geschwindigkeit
+
+
+                    #Buch, von oben (Objekt)
+                if(Map_x > 440 and Map_x < 465 and Map_y > 300 and Map_y < 310):
+                    if(AshDirection == 'Down'):
+                        Buch = True
+                    if(Buch == True and AshDirection != 'Down'):
+                        Buch = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+
+                    #Buch, von rechts (Objekt)
+                elif(Map_x > 485 and Map_x < 495 and Map_y > 330 and Map_y < 360):
+                    if(AshDirection == 'Left'):
+                        Buch = True
+                    if(Buch == True and AshDirection != 'Left'):
+                        Buch = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+
+                    
+
+                #Couch
+                    #Vorbeigehen können
+                if (Map_x > 305 and Map_y > 410):
+                    if(Map_x > 300 and Map_y > 410 and Map_x < 365 and Map_y <= 415):
+                        Map_y += Geschwindigkeit
+                        
+                elif (Map_x > 365 and Map_y > 340):
+                    if(Map_x < 377 and Map_y < 405):
+                        Map_x += Geschwindigkeit
+
+                    #Obere und linke Seite
+                if(Map_x > 300 and Map_y > 320 and Map_x < 310 and Map_y < 400):
+                    Map_x -= Geschwindigkeit
+                    
+                elif(Map_x > 305 and Map_y > 310 and Map_x < 350 and Map_y < 330):
+                    Map_y -= Geschwindigkeit
+
+                    
+
+                    #Couch Pumelluff(Objekt)
+                if(Map_x > 365 and Map_y > 350 and Map_x < 384 and Map_y < 380):
+                    if(AshDirection == 'Left'):
+                        Pumelluff = True
+                    if(Pumelluff == True and AshDirection != 'Left'):
+                        Pumelluff = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+                    
+
+                #Rand
+                    #OBEN
+                if(Map_y < 215):
+                    Map_y += Geschwindigkeit
+                    #Rand oben, Uhr (Objekt)
+                if(Map_x > 440 and Map_y < 225 and Map_x < 465):
+                    if(AshDirection == 'Up'):
+                        Uhr = True
+                    if(Uhr == True and AshDirection != 'Up'):
+                        Uhr = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+
+                
+                    #UNTEN
+                if(Map_y > 460): 
+                    Map_y -= Geschwindigkeit
+                    #LINKS
+                if (Map_x < 215): 
+                    Map_x += Geschwindigkeit
+                    #RECHTS
+                if(Map_x > 580):
+                    Map_x -= Geschwindigkeit
+
+            elif Ash_Pos == 'Ash_Haus_Wohnzimmer':
+                
+                     #Rand
+                #Linke Wand
+                if(Map_x < 220):
+                    Map_x += Geschwindigkeit
+                #Untere Wand
+                elif(Map_y > 470):
+                    Map_y -= Geschwindigkeit
+                #Rechte Wand
+                elif(Map_x > 585):
+                    Map_x -= Geschwindigkeit
+                #Obere Wand
+                elif(Map_y < 174):
+                    Map_y += Geschwindigkeit
+
+                #Zur Küche (Funktion)
+                if(Map_x > 580 and Map_x < 590 and Map_y > 370 and Map_y < 400):
+                    Ingame3()
+
+                    #Bücherregal
+                if(Map_x > 505 and Map_x < 515 and Map_y > 170 and Map_y < 220):
+                    Map_x -= Geschwindigkeit
+                elif(Map_x > 517 and Map_x < 590 and Map_y > 210 and Map_y < 220):
+                    Map_y += Geschwindigkeit
+
+                    #Bücherregal_Secret(Objekt)
+                if(Map_x > 504 and Map_x < 515 and Map_y > 165 and Map_y < 220):
+                    if(AshDirection == 'Right'):
+                        Bücherregal_Secret = True
+                    if(Bücherregal_Secret == True and AshDirection != 'Right'):
+                        Bücherregal_Secret = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+
+                    #Bücherregal(Objekt)
+                if(Map_x > 537 and Map_x < 585 and Map_y > 215 and Map_y < 225):
+                    if(AshDirection == 'Up'):
+                        Bücherregal = True
+                    if(Bücherregal == True and AshDirection != 'Up'):
+                        Bücherregal = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+
+                    #Holztisch
+                if(Map_x > 520 and Map_x < 590 and Map_y > 240 and Map_y < 255):
+                    Map_y -= Geschwindigkeit
+                elif(Map_x > 510 and Map_x < 520 and Map_y > 255 and Map_y < 320):
+                    Map_x -= Geschwindigkeit
+                elif(Map_x > 520 and Map_x < 590 and Map_y > 325 and Map_y < 335):
+                    Map_y += Geschwindigkeit
+
+                    #Blume, links(Objekt)
+                if(Map_x > 505 and Map_x < 520 and Map_y > 270 and Map_y < 300):
+                    if(AshDirection == 'Right'):
+                        Blume = True
+                    if(Blume == True and AshDirection != 'Right'):
+                        Blume = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+                        
+                    #Blume, oben(Objekt)
+                elif(Map_x > 520 and Map_x < 560 and Map_y > 235 and Map_y < 250):
+                    if(AshDirection == 'Down'):
+                        Blume = True
+                    if(Blume == True and AshDirection != 'Down'):
+                        Blume = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+
+                    #Treppe
+                if(Map_x > 280 and Map_x < 290 and Map_y > 170 and Map_y < 255):
+                    Map_x += Geschwindigkeit
+                elif(Map_x > 220 and Map_x < 270 and Map_y > 250 and Map_y < 265):
+                    Map_y += Geschwindigkeit
+
+                    #Treppe(Funktion)
+                if(Map_x > 280 and Map_x < 295 and Map_y > 200 and Map_y < 222):
+                    Ingame()
+
+                    #Pflanze
+                if(Map_x > 220 and Map_x < 260 and Map_y > 265 and Map_y < 295):
+                    Map_x += Geschwindigkeit
+                elif(Map_x > 220 and Map_x < 250 and Map_y > 295 and Map_y < 310):
+                    Map_y += Geschwindigkeit
+
+                    #Fernseher UND Konsole
+                if(Map_x > 349 and Map_x < 360 and Map_y > 170 and Map_y < 210):
+                    Map_x -= Geschwindigkeit
+                if(Map_x > 350 and Map_x < 490 and Map_y > 205 and Map_y < 225):
+                    Map_y += Geschwindigkeit
+                elif(Map_x > 480 and Map_x < 495 and Map_y > 170 and Map_y < 210):
+                    Map_x += Geschwindigkeit
+
+                    #Fernseher(Objekt)
+                if(Map_x > 375 and Map_x < 425 and Map_y > 220 and Map_y < 230):
+                    if(AshDirection == 'Up'):
+                        Fernseher = True
+                    if(Fernseher == True and AshDirection != 'Up'):
+                        Fernseher = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+                    #Wii (Objekt)
+                elif(Map_x > 435 and Map_x < 480 and Map_y > 220 and Map_y < 230):
+                    if(AshDirection == 'Up'):
+                        Wii = True
+                    if(Wii == True and AshDirection != 'Up'):
+                        Wii = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+
+                    #Mutter (Sitzt auf einem Stuhl)
+                        #Von links
+                if (Map_x > 340 and Map_x < 347 and Map_y > 285 and Map_y < 370):
+                    Map_x -= Geschwindigkeit
+                        #Von unten
+                elif(Map_x > 345 and Map_x < 415 and Map_y > 360 and Map_y < 375):
+                    Map_y += Geschwindigkeit
+                        #Von rechts
+                elif(Map_x > 405 and Map_x < 415 and Map_y > 285 and Map_y < 370):
+                    Map_x += Geschwindigkeit
+                        #Von oben
+                elif(Map_x > 345 and Map_x < 415 and Map_y > 280 and Map_y < 290):
+                    Map_y -= Geschwindigkeit
+
+                    #Mutter, oben(Objekt)
+                if(Map_x > 360 and Map_x < 405 and Map_y > 275 and Map_y < 290):
+                    if(AshDirection == 'Down'):
+                        Mutter_oben = True
+                    if(Mutter_oben == True and AshDirection != 'Down'):
+                        Mutter_oben = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+                        
+                    #Mutter, links(Objekt)
+                elif(Map_x > 335 and Map_x < 345 and Map_y > 320 and Map_y < 360):
+                    if(AshDirection == 'Right'):
+                        Mutter_links = True
+                    if(Mutter_links == True and AshDirection != 'Right'):
+                        Mutter_links = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                            Ja.destroy()
+                            Nein.destroy()
+                        except:
+                            pass
+                        
+                    #Mutter, unten(Objekt)
+                elif(Map_x > 360 and Map_x < 400 and Map_y > 370 and Map_y < 382):
+                    if(AshDirection == 'Up'):
+                        Mutter_unten = True
+                    if(Mutter_unten == True and AshDirection != 'Up'):
+                        Mutter_unten = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+                        
+                    #Pokemon (neben der Mutter auf einem Stuhl)
+                        #Von oben
+                if(Map_x > 415 and Map_x < 455 and Map_y > 300 and Map_y < 330):
+                    Map_y -= Geschwindigkeit
+                        #Von rechts
+                if(Map_x > 445 and Map_x < 460 and Map_y > 335 and Map_y < 360):
+                    Map_x += Geschwindigkeit
+                        #Von unten
+                elif(Map_x > 415 and Map_x < 455 and Map_y > 350 and Map_y < 370):
+                    Map_y += Geschwindigkeit
+
+                    #Pokemon (neben der Mutter auf einem Stuhl)(Objekt)
+                        #Von oben
+                if(Map_x > 415 and Map_x < 435 and Map_y > 295 and Map_y < 305):
+                    if(AshDirection == 'Down'):
+                        Pokemon_Mutter = True
+                    if(Pokemon_Mutter == True and AshDirection != 'Down'):
+                        Pokemon_Mutter = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+                        
+                        #Von rechts
+                elif(Map_x > 440 and Map_x < 463 and Map_y > 330 and Map_y < 355):
+                    if(AshDirection == 'Left'):
+                        Pokemon_Mutter = True
+                    if(Pokemon_Mutter == True and AshDirection != 'Left'):
+                        Pokemon_Mutter = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+                        
+                        #Von unten
+                elif(Map_x > 410 and Map_x < 440 and Map_y > 363 and Map_y < 375):
+                    if(AshDirection == 'Up'):
+                        Pokemon_Mutter = True
+                    if(Pokemon_Mutter == True and AshDirection != 'Up'):
+                        Pokemon_Mutter = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+
+                        
+            elif Ash_Pos == 'Ash_Haus_Küche':
+                #Rand(Unten, links, oben, rechts)
+
+                if(Map_y > 465):
+                    Map_y -= Geschwindigkeit
+                if(Map_x < 240):
+                    Map_x += Geschwindigkeit
+                if(Map_y < 170):
+                    Map_y += Geschwindigkeit
+                if(Map_x > 560):
+                    Map_x -= Geschwindigkeit
+
+    
+    
+        def Key_Up(event):
+            global Map_x, Map_y, timerUP, AshDirection, Ingame_map, timerDOWN, timerLEFT, timerRIGHT
+            timerUP += 1
             timerLEFT = 0
-        if(timerLEFT == 0):
-            Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Links_stehen, tags = 'Ash')
-
-        Alle_Objekte()
-
-        Map_x -= Geschwindigkeit
-
-    def Key_Right(event):
-        global Map_x, Map_y, timerRIGHT, AshDirection, Ingame_map, timerUP, timerDOWN, timerLEFT
-
-        AshDirection = 'Right'
-
-        timerDOWN = 0
-        timerUP = 0
-        timerLEFT = 0
-        timerRIGHT += 1
-
-        if (timerRIGHT >= Schrittgeschwindigkeit1):
-            Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Rechts_schritt1, tags = 'Ash')
-        if (timerRIGHT >= Schrittgeschwindigkeit2):
-            Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Rechts_stehen, tags = 'Ash')
-        if (timerRIGHT >= Schrittgeschwindigkeit3):
-            Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Rechts_schritt2, tags = 'Ash')
-        if (timerRIGHT >= Schrittgeschwindigkeit4):
-            Ingame_map.delete("Ash")
+            timerDOWN = 0
             timerRIGHT = 0
-        if(timerRIGHT == 0):
-            Ingame_map.delete("Ash")
-            Ingame_map.create_image(Map_x, Map_y, image = Nach_Rechts_stehen, tags = 'Ash')
 
-        Alle_Objekte()
+            AshDirection = 'Up'
+            
+            if (timerUP >= Schrittgeschwindigkeit1):
+                Ingame_map.delete("Ash")
+                Ingame_map.create_image(Map_x, Map_y, image = Nach_Oben_schritt1, tags = 'Ash')
+            if (timerUP >= Schrittgeschwindigkeit2):
+                Ingame_map.delete("Ash")
+                Ingame_map.create_image(Map_x, Map_y, image = Nach_Oben_stehen, tags = 'Ash')
+            if (timerUP >= Schrittgeschwindigkeit3):
+                Ingame_map.delete("Ash")
+                Ingame_map.create_image(Map_x, Map_y, image = Nach_Oben_schritt2, tags = 'Ash')
+            if (timerUP >= Schrittgeschwindigkeit4):
+                Ingame_map.delete("Ash")
+                timerUP = 0
+            if(timerUP == 0):
+                Ingame_map.delete("Ash")
+                Ingame_map.create_image(Map_x, Map_y, image = Nach_Oben_stehen, tags = 'Ash')
 
-        Map_x += Geschwindigkeit
+            Alle_Objekte()
+            
+            Map_y -= Geschwindigkeit
+            
+        def Key_Down(event):
+            global Map_x, Map_y, timerDOWN, AshDirection, Ingame_map, timerLEFT, timerRIGHT, timerUP
 
-    if Ash_Pos == 'Ash_Haus_Zimmer':
+            AshDirection = 'Down'
+
+            timerDOWN += 1
+            timerUP = 0
+            timerLEFT = 0
+            timerRIGHT = 0
+
+            if (timerDOWN >= Schrittgeschwindigkeit1):
+                Ingame_map.delete("Ash")
+                Ingame_map.create_image(Map_x, Map_y, image = Nach_Unten_schritt1, tags = 'Ash')
+            if (timerDOWN >= Schrittgeschwindigkeit2):
+                Ingame_map.delete("Ash")
+                Ingame_map.create_image(Map_x, Map_y, image = Nach_Unten_stehen, tags = 'Ash')
+            if (timerDOWN >= Schrittgeschwindigkeit3):
+                Ingame_map.delete("Ash")
+                Ingame_map.create_image(Map_x, Map_y, image = Nach_Unten_schritt2, tags = 'Ash')
+            if (timerDOWN >= Schrittgeschwindigkeit4):
+                Ingame_map.delete("Ash")
+                timerDOWN = 0
+            if(timerDOWN == 0):
+                Ingame_map.delete("Ash")
+                Ingame_map.create_image(Map_x, Map_y, image = Nach_Unten_stehen, tags = 'Ash')
+
+            Alle_Objekte()
+
+            Map_y += Geschwindigkeit
+          
+        def Key_Left(event):
+            global Map_x, Map_y, timerLEFT, AshDirection, Ingame_map, timerRIGHT, timerUP, timerDOWN
+
+            AshDirection = 'Left'
+
+            timerDOWN = 0
+            timerUP = 0
+            timerRIGHT = 0
+            timerLEFT += 1
+
+            if (timerLEFT >= Schrittgeschwindigkeit1):
+                Ingame_map.delete("Ash")
+                Ingame_map.create_image(Map_x, Map_y, image = Nach_Links_schritt1, tags = 'Ash')
+            if (timerLEFT >= Schrittgeschwindigkeit2):
+                Ingame_map.delete("Ash")
+                Ingame_map.create_image(Map_x, Map_y, image = Nach_Links_stehen, tags = 'Ash')
+            if (timerLEFT >= Schrittgeschwindigkeit3):
+                Ingame_map.delete("Ash")
+                Ingame_map.create_image(Map_x, Map_y, image = Nach_Links_schritt2, tags = 'Ash')
+            if (timerLEFT >= Schrittgeschwindigkeit4):
+                Ingame_map.delete("Ash")
+                timerLEFT = 0
+            if(timerLEFT == 0):
+                Ingame_map.delete("Ash")
+                Ingame_map.create_image(Map_x, Map_y, image = Nach_Links_stehen, tags = 'Ash')
+
+            Alle_Objekte()
+
+            Map_x -= Geschwindigkeit
+
+        def Key_Right(event):
+            global Map_x, Map_y, timerRIGHT, AshDirection, Ingame_map, timerUP, timerDOWN, timerLEFT
+
+            AshDirection = 'Right'
+
+            timerDOWN = 0
+            timerUP = 0
+            timerLEFT = 0
+            timerRIGHT += 1
+
+            if (timerRIGHT >= Schrittgeschwindigkeit1):
+                Ingame_map.delete("Ash")
+                Ingame_map.create_image(Map_x, Map_y, image = Nach_Rechts_schritt1, tags = 'Ash')
+            if (timerRIGHT >= Schrittgeschwindigkeit2):
+                Ingame_map.delete("Ash")
+                Ingame_map.create_image(Map_x, Map_y, image = Nach_Rechts_stehen, tags = 'Ash')
+            if (timerRIGHT >= Schrittgeschwindigkeit3):
+                Ingame_map.delete("Ash")
+                Ingame_map.create_image(Map_x, Map_y, image = Nach_Rechts_schritt2, tags = 'Ash')
+            if (timerRIGHT >= Schrittgeschwindigkeit4):
+                Ingame_map.delete("Ash")
+                timerRIGHT = 0
+            if(timerRIGHT == 0):
+                Ingame_map.delete("Ash")
+                Ingame_map.create_image(Map_x, Map_y, image = Nach_Rechts_stehen, tags = 'Ash')
+
+            Alle_Objekte()
+
+            Map_x += Geschwindigkeit
+
+    elif beginn == False:
+        pass
+
+
+
+
+    try:
+        Ingame_map.itemconfig('Ash.Haus.Wohnzimmer', image = ingame_map, tags = 'Map')
+    except:
         Ingame_map = Canvas(ingame_fenster, width = 800, height = 595)
         Ingame_map.place(x = 0, y = 0)
         Ingame_map.create_image(400,300, image = ingame_map, tags = 'Map') 
-    elif Ash_Pos == 'Ash_Haus_Wohnzimmer':
+
+    if beginn == True:
+        ingame_fenster.bind('<Key-Up>', Key_Up)
+        ingame_fenster.bind('<Key-Down>', Key_Down)
+        ingame_fenster.bind('<Key-Left>', Key_Left)
+        ingame_fenster.bind('<Key-Right>', Key_Right)
+    elif beginn == False:
         pass
     
-    ingame_fenster.bind('<Key-Up>', Key_Up)
-    ingame_fenster.bind('<Key-Down>', Key_Down)
-    ingame_fenster.bind('<Key-Left>', Key_Left)
-    ingame_fenster.bind('<Key-Right>', Key_Right)
-    
     #Hier wird "Ash" definiert
-    Ingame_map.create_image(Map_x, Map_y, image = Nach_Unten_stehen, tags = 'Ash') 
-    
+    if beginn == True:
+        Ingame_map.create_image(Map_x, Map_y, image = Nach_Unten_stehen, tags = 'Ash') 
+    elif beginn == False:
+        pass
 
     if sprinten == True:
-        sprintlabel = Label(ingame_fenster, text = 'Sprinten (G), Entsprinten (F)', font = ('Terminator Two', 10))
-        sprintlabel.configure(bg = 'light blue', fg = 'dark blue')
-        sprintlabel.place(x = 550, y = 560)
+        try:
+            sprintlabel.configure(text = 'Sprinten (G), Entsprinten (F)')
+        except:
+            sprintlabel = Label(ingame_fenster, text = 'Sprinten (G), Entsprinten (F)', font = ('Terminator Two', 10))
+            sprintlabel.configure(bg = 'light blue', fg = 'dark blue')
+            sprintlabel.place(x = 550, y = 560)
 
-    aktionslabel = Label(ingame_fenster, text = 'Aktion(K)', font = ('Terminator Two', 15))
-    aktionslabel.configure(bg = 'light blue', fg = 'dark blue')
-    aktionslabel.place(x = 675, y = 560)
+    if beginn == True:
+        aktionslabel = Label(ingame_fenster, text = 'Aktion(K)', font = ('Terminator Two', 15))
+        aktionslabel.configure(bg = 'light blue', fg = 'dark blue')
+        aktionslabel.place(x = 675, y = 560)
 
-    ingame_fenster.bind('<Key-o>', Pos)
-    ingame_fenster.bind('<Key-O>', Pos)
+        ingame_fenster.bind('<Key-o>', Pos)
+        ingame_fenster.bind('<Key-O>', Pos)
 
-    def Ingame_2():
-        global Ingame_map, Alle_Objekte, Map_x, Map_y, AshDirection, Geschwindigkeit, Ash_Pos
-        Ash_Pos = 'Ash_Haus_Wohnzimmer'
-           
+        def Ingame_2():
+            global Ingame_map, Alle_Objekte, Map_x, Map_y, AshDirection, Geschwindigkeit, Ash_Pos, beginn
+            Ash_Pos = 'Ash_Haus_Wohnzimmer'
+            beginn = False
+               
 
-        time.sleep(0.5)
-        Map_x = 293
-        Map_y = 210
-        AshDirection = 'Left'
+            time.sleep(0.5)
+            Map_x = 293
+            Map_y = 210
+            AshDirection = 'Left'
 
-        Ingame_map.itemconfig('Map', image = ash_haus_wohnzimmer, tags = 'Ash.Haus.Wohnzimmer')
+            Ingame_map.itemconfig('Map', image = ash_haus_wohnzimmer, tags = 'Ash.Haus.Wohnzimmer')
 
-    def Ingame3():
-        global Ingame_map, Alle_Objekte, Map_x, Map_y, AshDirection, Geschwindigkeit, Ash_Pos
-        Ash_Pos = 'Ash_Haus_Küche'
-        time.sleep(0.5)
-        Ingame_map.itemconfig('Ash.Haus.Wohnzimmer', image = ash_haus_küche, tags = 'Küche')
-        
+        def Ingame3():
+            global Ingame_map, Alle_Objekte, Map_x, Map_y, AshDirection, Geschwindigkeit, Ash_Pos
+            Ash_Pos = 'Ash_Haus_Küche'
+            time.sleep(0.5)
+            Ingame_map.itemconfig('Ash.Haus.Wohnzimmer', image = ash_haus_küche, tags = 'Ash.Haus.Küche')
+            Map_x, Map_y = 250, 380
+
+    elif beginn == False:
+        pass
         
         
     Map_Hit = False
 def Aktion(event):
-    global AshDirection, Pikachu, Aktionsblase, Map_x, Map_y, Map_Hit, Blume_Item
+    try:
+        global AshDirection, Pikachu, Aktionsblase, Map_x, Map_y, Map_Hit, Blume_Item, Wasser, Alle_Items, Ja, Nein
 
-    #Ash's Zimmer
-    if Ash_Pos == 'Ash_Haus_Zimmer':
-        if(Pikachu == True):
-            if Map_Hit == False:
-                Aktionsblase = Label(fenster, image = aktionsblase,
-                             compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
-                Aktionsblase.place(x = 175, y = 475)
-                Aktionsblase.configure(text = 'Dies ist ein Pikachu !\naber kein echtes...')
-                Map_Hit = True
-            elif Map_Hit == True:
-                pass
-                
-        elif(Pumelluff == True):
-            if Map_Hit == False:
-                Aktionsblase = Label(fenster, image = aktionsblase,
-                                compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
-                Aktionsblase.place(x = 175, y = 475)
-                Aktionsblase.configure(text = 'Ein pumeliges Pumelluff !')
-                Map_Hit = True
-            elif Map_Hit == True:
-                pass
-
-        elif(Uhr == True):
-            if Map_Hit == False:
-                Aktionsblase = Label(fenster, image = aktionsblase,
-                                compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
-                Aktionsblase.place(x = 175, y = 475)
-                Aktionsblase.configure(text = 'Die Uhr ist sehr verstaubt...\nfinde etwas um sie\nsauber zu machen.')
-                Map_Hit = True
-            elif Map_Hit == True:
-                pass
-                
-        elif(Buch == True):
-            if Map_Hit == False:
-                Aktionsblase = Label(fenster, image = aktionsblase,
-                                compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
-                Aktionsblase.place(x = 175, y = 475)
-                Aktionsblase.configure(text = '"Das Legendäre Pokemon:\n M......"\nder rest ist verkratzt..')
-                Map_Hit = True
-            elif Map_Hit == True:
-                pass
-
-    if Ash_Pos == 'Ash_Haus_Wohnzimmer':
-        if(Fernseher == True):
-            if Map_Hit == False:
-                Aktionsblase = Label(fenster, image = aktionsblase,
-                                compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
-                Aktionsblase.place(x = 175, y = 475)
-                Aktionsblase.configure(text = '*Ein Rauschbild*...\nder Fernseher funktioniert\nnicht richtig..')
-                Map_Hit = True
-            elif Map_Hit == True:
-                pass
-
-        elif(Wii == True):
-            if Map_Hit == False:
-                Aktionsblase = Label(fenster, image = aktionsblase,
-                                compound = 'center', font = ('Terminator Two', 15), fg = 'black', bg = 'black', bd = 0)
-                Aktionsblase.place(x = 175, y = 475)
-                Aktionsblase.configure(text = 'Krrrrrr!!!...')
-                Map_Hit = True
-            elif Map_Hit == True:
-                pass
-
-        elif(Bücherregal_Secret == True):
-            if Map_Hit == False:
-                Aktionsblase = Label(fenster, image = aktionsblase,
-                                compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
-                Aktionsblase.place(x = 175, y = 475)
-                Aktionsblase.configure(text = 'Hier wurde etwas reingeritzt...\nfinde heraus wer es war!')
-                Map_Hit = True
-            elif Map_Hit == True:
-                pass
-
-        elif(Bücherregal == True):
-            if Map_Hit == False:
-                Aktionsblase = Label(fenster, image = aktionsblase,
-                                compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
-                Aktionsblase.place(x = 175, y = 475)
-                Aktionsblase.configure(text = 'Viele alte Bücher...\n-Ich finde man sollte\nsie wegwerfen-')
-                Map_Hit = True
-            elif Map_Hit == True:
-                pass
-
-        elif(Blume == True):
-            if Blume_Item == False:
+        #Ash's Zimmer
+        if Ash_Pos == 'Ash_Haus_Zimmer':
+            if(Pikachu == True):
                 if Map_Hit == False:
-                        Aktionsblase = Label(fenster, image = aktionsblase,
-                                        compound = 'center', font = ('Terminator Two', 15), fg = 'blue', bg = 'black', bd = 0)
-                        Aktionsblase.place(x = 175, y = 475)
-                        Aktionsblase.configure(text = '*Du hast Wasser gefunden*')
-                        Wasser += 1
-                        Map_Hit = True
-                        Blume_Item = True
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                 compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = 'Dies ist ein Pikachu !\naber kein echtes...')
+                    Map_Hit = True
                 elif Map_Hit == True:
-                        pass
+                    pass
                     
-            elif Blume_Item == True:
+            elif(Pumelluff == True):
                 if Map_Hit == False:
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                    compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = 'Ein pumeliges Pumelluff !')
+                    Map_Hit = True
+                elif Map_Hit == True:
+                    pass
+
+            elif(Uhr == True):
+                if Map_Hit == False:
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                    compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = 'Die Uhr ist sehr verstaubt...\nfinde etwas um sie\nsauber zu machen.')
+                    Map_Hit = True
+                elif Map_Hit == True:
+                    pass
+                    
+            elif(Buch == True):
+                if Map_Hit == False:
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                    compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = '"Das Legendäre Pokemon:\n M......"\nder rest ist verkratzt..')
+                    Map_Hit = True
+                elif Map_Hit == True:
+                    pass
+
+        if Ash_Pos == 'Ash_Haus_Wohnzimmer':
+            if(Fernseher == True):
+                if Map_Hit == False:
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                    compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = '*Ein Rauschbild*...\nder Fernseher funktioniert\nnicht richtig..')
+                    Map_Hit = True
+                elif Map_Hit == True:
+                    pass
+
+            elif(Wii == True):
+                if Map_Hit == False:
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                    compound = 'center', font = ('Terminator Two', 15), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = 'Krrrrrr!!!...')
+                    Map_Hit = True
+                elif Map_Hit == True:
+                    pass
+
+            elif(Bücherregal_Secret == True):
+                if Map_Hit == False:
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                    compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = 'Hier wurde etwas reingeritzt...\nfinde heraus wer es war!')
+                    Map_Hit = True
+                elif Map_Hit == True:
+                    pass
+
+            elif(Bücherregal == True):
+                if Map_Hit == False:
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                    compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = 'Viele alte Bücher...\n-Ich finde man sollte\nsie wegwerfen-')
+                    Map_Hit = True
+                elif Map_Hit == True:
+                    pass
+
+            elif(Blume == True):
+                if Blume_Item == False:
+                    if Map_Hit == False:
+                            Aktionsblase = Label(fenster, image = aktionsblase,
+                                            compound = 'center', font = ('Terminator Two', 15), fg = 'blue', bg = 'black', bd = 0)
+                            Aktionsblase.place(x = 175, y = 475)
+                            Aktionsblase.configure(text = '*Du hast Wasser gefunden*')
+                            Wasser += 1
+                            Alle_Items += ['Wasser: '+str(Wasser)]
+                            Map_Hit = True
+                            Blume_Item = True
+                    elif Map_Hit == True:
+                            pass
+                        
+                elif Blume_Item == True:
+                    if Map_Hit == False:
+                            Aktionsblase = Label(fenster, image = aktionsblase,
+                                            compound = 'center', font = ('Terminator Two', 15), fg = 'black', bg = 'black', bd = 0)
+                            Aktionsblase.place(x = 175, y = 475)
+                            Aktionsblase.configure(text = 'Die Blumen sind frisch.')
+                            Map_Hit = True
+                    elif Map_Hit == True:
+                            pass
+                        
+            elif(Mutter_oben == True):
+                if Map_Hit == False:
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                    compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = 'Bitte geh mir aus dem Bild '+str(name)+'!\nIch versuche den Fernseher\nzum laufen zu bringen!')
+                    Map_Hit = True
+                elif Map_Hit == True:
+                    pass
+                
+            elif(Mutter_links == True):
+                if Map_Hit == False:
+                    if not "Mutter" in Mission:
                         Aktionsblase = Label(fenster, image = aktionsblase,
-                                        compound = 'center', font = ('Terminator Two', 15), fg = 'black', bg = 'black', bd = 0)
+                                        compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
                         Aktionsblase.place(x = 175, y = 475)
-                        Aktionsblase.configure(text = 'Die Blumen sind frisch.')
+                        Aktionsblase.configure(text = str(name)+', findest du bitte für mich heraus\n was deine Schwester getan hat?\nsie ist so komisch...')
+                        Ja = Button(fenster, text = 'Ja', font = ('Terminator Two', 20), fg = 'black', bg = 'light grey', bd = 0, command = Ja_command)
+                        Ja.place(x = 300, y = 550)
+                        Nein = Button(fenster, text = 'Nein', font = ('Terminator Two', 20), fg = 'black', bg = 'light grey', bd = 0, command = Nein_command)
+                        Nein.place(x = 400, y = 550)
+                        Map_Hit = True
+                    elif "Mutter" in Mission:
+                        Aktionsblase = Label(fenster, image = aktionsblase,
+                                        compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                        Aktionsblase.place(x = 175, y = 475)
+                        Aktionsblase.configure(text = str(name)+', danke für deine Hilfe!')
                         Map_Hit = True
                 elif Map_Hit == True:
-                        pass
+                    pass
+                
+            elif(Mutter_unten == True):
+                if Map_Hit == False:
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                    compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = str(name)+'\nich möchte nicht\nvon hinten angesprochen werden!')
+                    Map_Hit = True
+                elif Map_Hit == True:
+                    pass
+
+            elif(Pokemon_Mutter == True):
+                if Map_Hit == False:
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                    compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = 'Pumelulululuff!!')
+                    Map_Hit = True
+                elif Map_Hit == True:
+                    pass
+
+
+        else:
+            pass
+
+
+
+
+    except:
+        print('Die Taste "K" kann nur im Spiel\nverwendet werden!')
                 
 
 
-            
-    else:
-        pass
+def Ja_command():
+    global Aktionsblasen, Ja, Nein, Mission
+    
+    if Mutter_links == True:
+        Mission += ['Mutter']
+        Aktionsblase.configure(text = 'Ich bin dir sehr dankbar!')
+        Ja.destroy()
+        Nein.destroy()
+        
+                
+
+
+def Nein_command():
+    global Aktionsblasen, Ja, Nein, Mission
+
+    if Mutter_links == True:
+        Aktionsblase.configure(text = str(name)+', du bist faul!')
+        Ja.destroy()
+        Nein.destroy()
 
 
 def Pause(event):
@@ -748,9 +934,9 @@ def Maus_Pos(event):
         pass
     
 def Pos(event):
-        print('-'*20)
+        print('-'*30)
         print('Map_x = {}, Map_y = {}'.format(Map_x, Map_y))
-        print('-'*20)
+        print('-'*30)
 
 def weiter1():
     nextbutton.configure(command = weiter2)
