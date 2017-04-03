@@ -306,7 +306,7 @@ def Ingame():
                     Map_y += Geschwindigkeit
 
                 #Zur Küche (Funktion)
-                if(Map_x > 580 and Map_x < 590 and Map_y > 370 and Map_y < 400):
+                if(Map_x > 580 and Map_x < 590 and Map_y > 350 and Map_y < 400 and AshDirection == 'Right'):
                     Ingame3()
 
                     #Bücherregal
@@ -356,6 +356,7 @@ def Ingame():
                         Map_Hit = False
                         try:
                             Aktionsblase.destroy()
+                            Got_Item.destroy()
                         except:
                             pass
                         
@@ -368,6 +369,7 @@ def Ingame():
                         Map_Hit = False
                         try:
                             Aktionsblase.destroy()
+                            Got_Item.destroy()
                         except:
                             pass
 
@@ -522,15 +524,38 @@ def Ingame():
             elif Ash_Pos == 'Ash_Haus_Küche':
                 #Rand(Unten, links, oben, rechts)
 
-                if(Map_y > 465):
+                if(Map_y > 457):
                     Map_y -= Geschwindigkeit
-                if(Map_x < 240):
+                if(Map_x < 250):
                     Map_x += Geschwindigkeit
                 if(Map_y < 170):
                     Map_y += Geschwindigkeit
                 if(Map_x > 560):
                     Map_x -= Geschwindigkeit
 
+                #Tür zum Wohnzimmer (Funktion)
+                if(Map_x > 240 and Map_x < 252 and Map_y > 370 and Map_y < 385 and AshDirection == 'Left'):
+                    Ingame_2()
+
+                    #Pflanze
+                if(Map_x > 515 and Map_x < 530 and Map_y > 415 and Map_y < 460):
+                    Map_x -= Geschwindigkeit
+
+                elif(Map_x > 520 and Map_x < 600 and Map_y > 395 and Map_y < 405):
+                    Map_y -= Geschwindigkeit
+
+                    #Tisch(Unten)
+                if(Map_x > 340 and Map_x < 460 and Map_y > 360 and Map_y < 366):
+                    Map_y += Geschwindigkeit
+                    #Tisch(Rechts)
+                elif(Map_x > 455 and Map_x < 465 and Map_y > 280 and Map_y < 360):
+                    Map_x += Geschwindigkeit
+                    #Tisch(Links)
+                elif(Map_x > 340 and Map_x < 345 and Map_y > 264 and Map_y < 350):
+                    Map_x -= Geschwindigkeit
+                    #Tisch, kante, Schwesterkopf(Oben)
+                if(Map_x > 345 and Map_x < 400 and Map_y > 260 and Map_y < 284):
+                    Map_y -= Geschwindigkeit
     
     
         def Key_Up(event):
@@ -695,20 +720,32 @@ def Ingame():
         ingame_fenster.bind('<Key-o>', Pos)
         ingame_fenster.bind('<Key-O>', Pos)
 
-        def Ingame_2():
+        def Ingame_2(): #Wohnzimmer
             global Ingame_map, Alle_Objekte, Map_x, Map_y, AshDirection, Geschwindigkeit, Ash_Pos, beginn
-            Ash_Pos = 'Ash_Haus_Wohnzimmer'
-            beginn = False
-               
+            if beginn == True:
+                beginn = False
+            elif beginn == False:
+                pass
 
             time.sleep(0.5)
-            Map_x = 293
-            Map_y = 210
-            AshDirection = 'Left'
 
-            Ingame_map.itemconfig('Map', image = ash_haus_wohnzimmer, tags = 'Ash.Haus.Wohnzimmer')
-
-        def Ingame3():
+            if Ash_Pos == 'Ash_Haus_Zimmer':
+                Map_x = 293
+                Map_y = 210
+                AshDirection = 'Right'
+            elif Ash_Pos == 'Ash_Haus_Küche':
+                Map_x = 585
+                Map_y = 385
+                AshDirection = 'Left'
+            Ingame_map.itemconfig('Ash')
+                
+            if Ash_Pos == 'Ash_Haus_Zimmer':
+                Ingame_map.itemconfig('Map', image = ash_haus_wohnzimmer, tags = 'Ash.Haus.Wohnzimmer')
+            elif Ash_Pos == 'Ash_Haus_Küche':
+                Ingame_map.itemconfig('Ash.Haus.Küche', image = ash_haus_wohnzimmer, tags = 'Ash.Haus.Wohnzimmer')
+                
+            Ash_Pos = 'Ash_Haus_Wohnzimmer'
+        def Ingame3(): #Küche
             global Ingame_map, Alle_Objekte, Map_x, Map_y, AshDirection, Geschwindigkeit, Ash_Pos
             Ash_Pos = 'Ash_Haus_Küche'
             time.sleep(0.5)
@@ -723,6 +760,7 @@ def Ingame():
 def Aktion(event):
     try:
         global AshDirection, Pikachu, Aktionsblase, Map_x, Map_y, Map_Hit, Blume_Item, Wasser, Alle_Items, Ja, Nein
+        global Got_Item
 
         #Ash's Zimmer
         if Ash_Pos == 'Ash_Haus_Zimmer':
@@ -816,6 +854,9 @@ def Aktion(event):
                             Aktionsblase.configure(text = '*Du hast Wasser gefunden*')
                             Wasser += 1
                             Alle_Items += ['Wasser: '+str(Wasser)]
+                            Got_Item = Label(fenster, text = '+1 Wasser', fg = 'white', bg = 'dark green',
+                                             font = ('Terminator Two', 20))
+                            Got_Item.place(x = 600, y = 20)
                             Map_Hit = True
                             Blume_Item = True
                     elif Map_Hit == True:
@@ -881,6 +922,12 @@ def Aktion(event):
                     Map_Hit = True
                 elif Map_Hit == True:
                     pass
+
+                
+        if Ash_Pos == 'Ash_Haus_Küche':
+            pass
+
+        
 
 
         else:
