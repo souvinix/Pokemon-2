@@ -98,6 +98,12 @@ Bücherregal_Secret = False
 Bücherregal = False
 Blume = False
 Blume_Item = False
+Gold_Uhr = False
+Waschbecken = False
+Herdplatte = False
+Bild = False
+Kühlschrank = False
+Kühlschrank_Item = False
 
 ############################
 
@@ -151,7 +157,8 @@ def Ingame():
         def Alle_Objekte():
             global Map_x, Map_y, AshDirection, Pikachu, Buch, Uhr, Pumelluff, Aktionsblase, Map_Hit
             global Fernseher, Wii, Mutter, Pokemon_Mutter, Schwester, Pokemon_Schwester, Bücherregal, Bücherregal_Secret
-            global Blume, Blume_Item, Wasser, Alle_Items, Mutter_oben, Mutter_links, Mutter_unten, Ja, Nein
+            global Blume, Blume_Item, Wasser, Alle_Items, Mutter_oben, Mutter_links, Mutter_unten, Ja, Nein, Gold_Uhr
+            global Waschbecken, Herdplatte, Bild, Kühlschrank
             
             if Ash_Pos == 'Ash_Haus_Zimmer':
                 #Bett
@@ -304,6 +311,18 @@ def Ingame():
                 #Obere Wand
                 elif(Map_y < 174):
                     Map_y += Geschwindigkeit
+
+                    #Golduhr(Objekt)
+                if(Map_x > 290 and Map_x < 315 and Map_y > 170 and Map_y < 180):
+                    if(AshDirection == 'Up'):
+                        Gold_Uhr = True
+                    if(Gold_Uhr == True and AshDirection != 'Up'):
+                        Gold_Uhr = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
 
                 #Zur Küche (Funktion)
                 if(Map_x > 580 and Map_x < 590 and Map_y > 350 and Map_y < 400 and AshDirection == 'Right'):
@@ -528,7 +547,7 @@ def Ingame():
                     Map_y -= Geschwindigkeit
                 if(Map_x < 250):
                     Map_x += Geschwindigkeit
-                if(Map_y < 170):
+                if(Map_y < 175):
                     Map_y += Geschwindigkeit
                 if(Map_x > 560):
                     Map_x -= Geschwindigkeit
@@ -556,6 +575,89 @@ def Ingame():
                     #Tisch, kante, Schwesterkopf(Oben)
                 if(Map_x > 345 and Map_x < 400 and Map_y > 260 and Map_y < 284):
                     Map_y -= Geschwindigkeit
+                    #Tisch(Oben)
+                elif(Map_x > 380 and Map_x < 460 and Map_y > 270 and Map_y < 275):
+                    Map_y -= Geschwindigkeit
+
+                    #Pflanze(oben, links(im raum))
+                if(Map_x > 240 and Map_x < 275 and Map_y > 200 and Map_y < 227):
+                    Map_y += Geschwindigkeit
+                elif(Map_x > 265 and Map_x < 285 and Map_y > 165 and Map_y < 220):
+                    Map_x += Geschwindigkeit
+
+                    #Waschbecken
+                if(Map_x > 300 and Map_x < 310 and Map_y > 170 and Map_y < 180):
+                    Map_x -= Geschwindigkeit
+                elif(Map_x > 300 and Map_x < 390 and Map_y > 190 and Map_y < 200):
+                    Map_y += Geschwindigkeit
+                elif(Map_x > 385 and Map_x < 400 and Map_y > 170 and Map_y < 190):
+                    Map_x += Geschwindigkeit
+
+                    #Kühlschrank
+                if(Map_x > 405 and Map_x < 415 and Map_y > 170 and Map_y < 190):
+                    Map_x -= Geschwindigkeit
+                elif(Map_x > 420 and Map_x < 475 and Map_y > 200 and Map_y < 210):
+                    Map_y += Geschwindigkeit
+                elif(Map_x > 460 and Map_x < 475 and Map_y > 170 and Map_y < 190):
+                    Map_x += Geschwindigkeit
+
+                    #Mülleimer
+                if(Map_x > 540 and Map_x < 550 and Map_y > 170 and Map_y < 210):
+                    Map_x -= Geschwindigkeit
+                elif(Map_x > 545 and Map_x < 570 and Map_y > 205 and Map_y < 216):
+                    Map_y += Geschwindigkeit
+
+                    #Eine weitere Golduhr(Objekt)
+                if(Map_x > 280 and Map_x < 305 and Map_y > 160 and Map_y < 180):
+                    if(AshDirection == 'Up'):
+                        Gold_Uhr = True
+                    if(Gold_Uhr == True and AshDirection != 'Up'):
+                        Gold_Uhr = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+                        
+                    #Waschbecken(Objekt)
+                if(Map_x > 305 and Map_x < 345 and Map_y > 170 and Map_y < 205):
+                    if(AshDirection == 'Up'):
+                        Waschbecken = True
+                    if(Waschbecken == True and AshDirection != 'Up'):
+                        Waschbecken = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+
+                    #Herdplatte(Objekt)
+                elif(Map_x > 355 and Map_x < 380 and Map_y > 170 and Map_y < 205):
+                    if(AshDirection == 'Up'):
+                        Herdplatte = True
+                    if(Herdplatte == True and AshDirection != 'Up'):
+                        Herdplatte = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+
+                    #Kühlschrank(Objekt)
+                elif(Map_x > 425 and Map_x < 460 and Map_y > 170 and Map_y < 214):
+                    if(AshDirection == 'Up'):
+                        Kühlschrank = True
+                    if(Kühlschrank == True and AshDirection != 'Up'):
+                        Kühlschrank = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                            Got_Item.destroy()
+                        except:
+                            pass
+                        
+
+                    
     
     
         def Key_Up(event):
@@ -760,7 +862,7 @@ def Ingame():
 def Aktion(event):
     try:
         global AshDirection, Pikachu, Aktionsblase, Map_x, Map_y, Map_Hit, Blume_Item, Wasser, Alle_Items, Ja, Nein
-        global Got_Item
+        global Got_Item, Kühlschrank_Item
 
         #Ash's Zimmer
         if Ash_Pos == 'Ash_Haus_Zimmer':
@@ -811,6 +913,16 @@ def Aktion(event):
                                     compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
                     Aktionsblase.place(x = 175, y = 475)
                     Aktionsblase.configure(text = '*Ein Rauschbild*...\nder Fernseher funktioniert\nnicht richtig..')
+                    Map_Hit = True
+                elif Map_Hit == True:
+                    pass
+                
+            if(Gold_Uhr == True):
+                if Map_Hit == False:
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                    compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = 'Eine Golduhr...\ndies ist das Erbe meines Vaters')
                     Map_Hit = True
                 elif Map_Hit == True:
                     pass
@@ -925,7 +1037,63 @@ def Aktion(event):
 
                 
         if Ash_Pos == 'Ash_Haus_Küche':
-            pass
+            
+            if(Gold_Uhr == True):
+                if Map_Hit == False:
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                    compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = 'Eine Golduhr...\ndies ist das Erbe meiner Großmutter')
+                    Map_Hit = True
+                elif Map_Hit == True:
+                    pass
+
+            elif(Waschbecken == True):
+                if Map_Hit == False:
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                    compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = '-Grrrrr!!!\nnichts funktioniert hier...\nnichtmal das Waschbecken!!!-')
+                    Map_Hit = True
+                elif Map_Hit == True:
+                    pass
+
+            elif(Herdplatte == True):
+                if Map_Hit == False:
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                    compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = '*Ein kleines flämchen,\ngibt ein hauch wärme von sich.*')
+                    Map_Hit = True
+                elif Map_Hit == True:
+                    pass
+
+            elif(Kühlschrank == True):
+                if Kühlschrank_Item == False:
+                    if Map_Hit == False:
+                            Aktionsblase = Label(fenster, image = aktionsblase,
+                                            compound = 'center', font = ('Terminator Two', 15), fg = 'blue', bg = 'black', bd = 0)
+                            Aktionsblase.place(x = 175, y = 475)
+                            Aktionsblase.configure(text = '*Du hast Wasser gefunden*')
+                            Wasser += 1
+                            Alle_Items += ['Wasser: '+str(Wasser)]
+                            Got_Item = Label(fenster, text = '+1 Wasser', fg = 'white', bg = 'dark green',
+                                             font = ('Terminator Two', 20))
+                            Got_Item.place(x = 600, y = 20)
+                            Map_Hit = True
+                            Kühlschrank_Item = True
+                    elif Map_Hit == True:
+                            pass
+                        
+                elif Kühlschrank_Item == True:
+                    if Map_Hit == False:
+                            Aktionsblase = Label(fenster, image = aktionsblase,
+                                            compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                            Aktionsblase.place(x = 175, y = 475)
+                            Aktionsblase.configure(text = 'Ein Kühlschrank, wo ab und zu etwas\ndrinn steht...')
+                            Map_Hit = True
+                    elif Map_Hit == True:
+                            pass
 
         
 
