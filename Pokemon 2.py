@@ -32,6 +32,7 @@ schiggy_button = PhotoImage(file = pfad+'Schiggy_Button.gif')
 glumanda_button = PhotoImage(file = pfad+'Glumanda_Button.gif')
 bisasam_button = PhotoImage(file = pfad+'Bisasam_Button.gif')
 aktionsblase = PhotoImage(file = pfad+'Aktionsblase.png')
+wohnzimmer_bild = PhotoImage(file = pfad+'Wohnzimmer_Bild.gif')
 
 pfad2 = 'Ash_Transparent/'
 Nach_Links_stehen = PhotoImage(file = pfad2+'Von_links_stehen.png')
@@ -104,6 +105,7 @@ Herdplatte = False
 Bild = False
 Kühlschrank = False
 Kühlschrank_Item = False
+Mülleimer = False
 
 ############################
 
@@ -123,11 +125,14 @@ def Ingame():
         test_ingame.destroy()
     except:
         pass
-    
-    ingame_fenster = fenster
-    ingame_fenster.title('Pokemon 2 - InGame')
-    ingame_fenster.geometry('800x600')
-    ingame_fenster.resizable(0,0)
+
+    if beginn == True:
+        ingame_fenster = fenster
+        ingame_fenster.title('Pokemon 2 - InGame')
+        ingame_fenster.geometry('800x600')
+        ingame_fenster.resizable(0,0)
+    elif beginn == False:
+        pass
 
 ################################
     if beginn == True:
@@ -158,7 +163,7 @@ def Ingame():
             global Map_x, Map_y, AshDirection, Pikachu, Buch, Uhr, Pumelluff, Aktionsblase, Map_Hit
             global Fernseher, Wii, Mutter, Pokemon_Mutter, Schwester, Pokemon_Schwester, Bücherregal, Bücherregal_Secret
             global Blume, Blume_Item, Wasser, Alle_Items, Mutter_oben, Mutter_links, Mutter_unten, Ja, Nein, Gold_Uhr
-            global Waschbecken, Herdplatte, Bild, Kühlschrank
+            global Waschbecken, Herdplatte, Bild, Kühlschrank, Mülleimer, Wohnzimmerbild
             
             if Ash_Pos == 'Ash_Haus_Zimmer':
                 #Bett
@@ -655,6 +660,41 @@ def Ingame():
                             Got_Item.destroy()
                         except:
                             pass
+
+                    #Mülleimer(Objekt)
+                if(Map_x > 530 and Map_x < 570 and Map_y > 172 and Map_y < 205):
+                    if(AshDirection == 'Right'):
+                        Mülleimer = True
+                    if(Mülleimer == True and AshDirection != 'Right'):
+                        Mülleimer = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+                        
+                elif(Map_x > 540 and Map_x < 570 and Map_y > 200 and Map_y < 220):
+                    if(AshDirection == 'Up'):
+                        Mülleimer = True
+                    if(Mülleimer == True and AshDirection != 'Up'):
+                        Mülleimer = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                        except:
+                            pass
+
+                if(Map_x > 510 and Map_x < 545 and Map_y > 165 and Map_y < 190):
+                    if(AshDirection == 'Up'):
+                        Bild = True
+                    if(Bild == True and AshDirection != 'Up'):
+                        Bild = False
+                        Map_Hit = False
+                        try:
+                            Aktionsblase.destroy()
+                            Wohnzimmerbild.destroy()
+                        except:
+                            pass
                         
 
                     
@@ -861,8 +901,8 @@ def Ingame():
     Map_Hit = False
 def Aktion(event):
     try:
-        global AshDirection, Pikachu, Aktionsblase, Map_x, Map_y, Map_Hit, Blume_Item, Wasser, Alle_Items, Ja, Nein
-        global Got_Item, Kühlschrank_Item
+        global AshDirection, Pikachu, Aktionsblase, Map_x, Map_y, Map_Hit, Blume_Item, Wasser, Alle_Items
+        global Got_Item, Kühlschrank_Item, Ja, Nein, Wohnzimmerbild
 
         #Ash's Zimmer
         if Ash_Pos == 'Ash_Haus_Zimmer':
@@ -1094,6 +1134,28 @@ def Aktion(event):
                             Map_Hit = True
                     elif Map_Hit == True:
                             pass
+
+            elif(Mülleimer == True):
+                if Map_Hit == False:
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                    compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = 'Dieser Papierkorb ist leer.')
+                    Map_Hit = True
+                elif Map_Hit == True:
+                    pass
+
+            elif(Bild == True):
+                if Map_Hit == False:
+                    Aktionsblase = Label(fenster, image = aktionsblase,
+                                    compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
+                    Aktionsblase.place(x = 175, y = 475)
+                    Aktionsblase.configure(text = 'Ich habe es gemalt\nals ich klein war...')
+                    Wohnzimmerbild = Label(fenster, image = Wohnzimmer_Bild, bd = 0)
+                    Wohnzimmerbild.place(x = 300, y = 300)
+                    Map_Hit = True
+                elif Map_Hit == True:
+                    pass
 
         
 
