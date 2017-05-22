@@ -4,53 +4,19 @@ from tkinter import *
 from tkinter import ttk
 import time
 import random
+from Pokemon_Klasse import *
 
 fenster = Tk()
 fenster.title('The Elder Scrolls 6: Pokemon')
 fenster.geometry('800x600')
 fenster.resizable(0,0)
+from Pokemon_Photoimages import *
 
 MyMenu = Menu()
 fenster.configure(menu=MyMenu)
 Menubutton1 = Menu(MyMenu)
 MyMenu.add_cascade(label = 'Commands', menu = Menubutton1)
 Menubutton1.add_command(label = 'Quit', command = fenster.destroy)
-
-pfad = 'Alle_Bilder/'
-
-prof_eich = PhotoImage(file = pfad+'prof eich.gif')
-sprechblase = PhotoImage(file = pfad+'sprechblase.gif')
-Hooh = PhotoImage(file = pfad+'hooh.gif')
-boy = PhotoImage(file = pfad+'boy.gif')
-girl = PhotoImage(file = pfad+'girl.gif')
-schwarz = PhotoImage(file = pfad+'schwarz.gif')
-glumanda = PhotoImage(file = pfad+'Glumanda.gif')
-bisasam = PhotoImage(file = pfad+'Bisasam.gif')
-schiggy = PhotoImage(file = pfad+'Schiggy.gif')
-bg_for_pokechoice = PhotoImage(file = pfad+'bg_for_pokechoice.gif')
-schiggy_button = PhotoImage(file = pfad+'Schiggy_Button.gif')
-glumanda_button = PhotoImage(file = pfad+'Glumanda_Button.gif')
-bisasam_button = PhotoImage(file = pfad+'Bisasam_Button.gif')
-aktionsblase = PhotoImage(file = pfad+'Aktionsblase.png')
-wohnzimmer_bild = PhotoImage(file = pfad+'Wohnzimmer_Bild.gif')
-
-pfad2 = 'Ash_Transparent/'
-Nach_Links_stehen = PhotoImage(file = pfad2+'Von_links_stehen.png')
-Nach_Links_schritt1 = PhotoImage(file = pfad2+'Von_links_schritt1.png')
-Nach_Links_schritt2 = PhotoImage(file = pfad2+'Von_links_schritt2.png')
-Nach_Rechts_stehen = PhotoImage(file = pfad2+'Von_rechts_stehen.png')
-Nach_Rechts_schritt1 = PhotoImage(file = pfad2+'Von_rechts_schritt1.png')
-Nach_Rechts_schritt2 = PhotoImage(file = pfad2+'Von_rechts_schritt2.png')
-Nach_Unten_stehen = PhotoImage(file = pfad2+'Von_vorne_stehen.png')
-Nach_Unten_schritt1 = PhotoImage(file = pfad2+'Von_vorne_schritt1.png')
-Nach_Unten_schritt2 = PhotoImage(file = pfad2+'Von_vorne_schritt2.png')
-Nach_Oben_stehen = PhotoImage(file = pfad2+'Von_hinten_stehen.png')
-Nach_Oben_schritt1 = PhotoImage(file = pfad2+'Von_hinten_schritt1.png')
-Nach_Oben_schritt2 = PhotoImage(file = pfad2+'Von_hinten_schritt2.png')
-
-ingame_map = PhotoImage(file = pfad+'Anfangsraum.gif')
-ash_haus_wohnzimmer = PhotoImage(file = pfad+'AshHausWohnzimmer.gif')
-ash_haus_küche = PhotoImage(file = pfad+'Ash_Haus_Küche2.png')
 
 ############################
 
@@ -64,7 +30,7 @@ Mein_Max_Leben = 100
 Mein_Aktuelles_Leben = 100
 sprinten = False
 Alle_Items = []
-name = 'Noah'
+name = 'Unbekannt'
 Mission = []
 
 ############################
@@ -108,7 +74,6 @@ Kühlschrank_Item = False
 Mülleimer = False
 
 ############################
-
 def Ingame_Escape(event):
     Ingame()
 
@@ -163,8 +128,8 @@ def Ingame():
             global Map_x, Map_y, AshDirection, Pikachu, Buch, Uhr, Pumelluff, Aktionsblase, Map_Hit
             global Fernseher, Wii, Mutter, Pokemon_Mutter, Schwester, Pokemon_Schwester, Bücherregal, Bücherregal_Secret
             global Blume, Blume_Item, Wasser, Alle_Items, Mutter_oben, Mutter_links, Mutter_unten, Ja, Nein, Gold_Uhr
-            global Waschbecken, Herdplatte, Bild, Kühlschrank, Mülleimer, Wohnzimmerbild
-            
+            global Waschbecken, Herdplatte, Kühlschrank, Mülleimer
+
             if Ash_Pos == 'Ash_Haus_Zimmer':
                 #Bett
                 if (Map_x < 300 and Map_y < 280 and Map_x < Map_y):
@@ -684,22 +649,27 @@ def Ingame():
                         except:
                             pass
 
+                    #Küchenbild (Objekt)
                 if(Map_x > 510 and Map_x < 545 and Map_y > 165 and Map_y < 190):
                     if(AshDirection == 'Up'):
-                        Bild = True
-                    if(Bild == True and AshDirection != 'Up'):
-                        Bild = False
+                        Küchenbild = True
+                    if(Küchenbild == True and AshDirection != 'Up'):
+                        Küchenbild = False
                         Map_Hit = False
                         try:
                             Aktionsblase.destroy()
-                            Wohnzimmerbild.destroy()
+                            KÜCHENBILD.destroy()
                         except:
                             pass
-                        
 
-                    
+
+
+    elif begin == False:
+        pass
+
     
-    
+    if beginn == True:
+        
         def Key_Up(event):
             global Map_x, Map_y, timerUP, AshDirection, Ingame_map, timerDOWN, timerLEFT, timerRIGHT
             timerUP += 1
@@ -902,7 +872,7 @@ def Ingame():
 def Aktion(event):
     try:
         global AshDirection, Pikachu, Aktionsblase, Map_x, Map_y, Map_Hit, Blume_Item, Wasser, Alle_Items
-        global Got_Item, Kühlschrank_Item, Ja, Nein, Wohnzimmerbild
+        global Got_Item, Kühlschrank_Item, Ja, Nein, Küchenbild
 
         #Ash's Zimmer
         if Ash_Pos == 'Ash_Haus_Zimmer':
@@ -1145,14 +1115,14 @@ def Aktion(event):
                 elif Map_Hit == True:
                     pass
 
-            elif(Bild == True):
+            elif(Küchenbild == True):
                 if Map_Hit == False:
                     Aktionsblase = Label(fenster, image = aktionsblase,
                                     compound = 'center', font = ('Terminator Two', 10), fg = 'black', bg = 'black', bd = 0)
                     Aktionsblase.place(x = 175, y = 475)
                     Aktionsblase.configure(text = 'Ich habe es gemalt\nals ich klein war...')
-                    Wohnzimmerbild = Label(fenster, image = Wohnzimmer_Bild, bd = 0)
-                    Wohnzimmerbild.place(x = 300, y = 300)
+                    KÜCHENBILD = Label(fenster, image = Küchen_Bild, bd = 0)
+                    KÜCHENBILD.place(x = 350, y = 350)
                     Map_Hit = True
                 elif Map_Hit == True:
                     pass
@@ -1637,7 +1607,7 @@ def Hauptmenü():
     test_ingame.configure(command = Ingame)
     test_ingame.place(x = 600, y = 350)
     fenster.bind('<Key-l>', Ingame_Escape)
-    
 
+    
 Hauptmenü()
 fenster.mainloop()
